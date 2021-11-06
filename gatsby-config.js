@@ -25,6 +25,25 @@ module.exports = {
     'gatsby-plugin-sass',
     'gatsby-plugin-sitemap',
     {
+      resolve: 'gatsby-plugin-webfonts',
+      options: {
+        fonts: {
+          google: [
+            {
+              family: 'Orbitron',
+              fontDisplay: 'swap',
+              variants: ['400'],
+            },
+            {
+              family: 'Jura',
+              fontDisplay: 'swap',
+              variants: ['400'],
+            },
+          ],
+        },
+      },
+    },
+    {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
         trackingId: process.env.GATSBY_GA_ID,

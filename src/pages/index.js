@@ -2,6 +2,9 @@
 import { Helmet } from 'react-helmet'
 import React from "react"
 
+// Styles
+import "styles/typography.scss"
+
 // markup
 const IndexPage = () => {
   return (
