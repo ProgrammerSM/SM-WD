@@ -7,7 +7,7 @@ const IndexPage = () => {
   return (
     <>
       <Helmet>
-        <title>Comming Soon</title>
+        <title>Coming Soon</title>
       </Helmet>
       <main>
         <h1>Website Coming Soon</h1>
