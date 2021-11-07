@@ -3,10 +3,13 @@ import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { withPrefix } from 'gatsby'
+import { ThemeContext, ThemeProvider } from '@emotion/react'
 
 // Components
 
 // Scripts
+import commonThemeValues from 'scripts/commonThemeValues'
+import themeColorGroups from 'scripts/themeColorGroups'
 import useSiteMetadata from 'scripts/useSiteMetadata'
 
 // Styles
@@ -33,6 +36,12 @@ const Layout = ({
       [currentURL] = currentURL.split('?')
 
     canonical = currentURL
+  }
+
+  const themeName = 'light'
+  const theme = {
+    ...commonThemeValues,
+    ...themeColorGroups[themeName],
   }
   
   return (
@@ -81,19 +90,23 @@ const Layout = ({
         <link href={`${withPrefix('/')}android-chrome-192x192.png`} rel='icon' sizes='192x192' type='image/png' />
         <link href={`${withPrefix('/')}android-chrome-256x256.png`} rel='icon' sizes='256x256' type='image/png' /> */}
       </Helmet>
-      <main
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          height: '100vh',
-          justifyContent: 'center',
-          textAlign: 'center', 
-          width: '100vw',
-        }} 
-      >
-        {/* {children} */}
-        <h1>Website Coming Soon</h1>
-      </main>
+      <ThemeProvider theme={theme}>
+        <main
+          style={{
+            alignItems: 'center',
+            background: theme.colors.backgroundColor,
+            color: theme.colors.fontColor,
+            display: 'flex',
+            height: '100vh',
+            justifyContent: 'center',
+            textAlign: 'center', 
+            width: '100vw',
+          }} 
+        >
+          {/* {children} */}
+          <h1>Website Coming Soon</h1>
+        </main>
+      </ThemeProvider>
     </>
   )
 }
