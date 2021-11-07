@@ -63,16 +63,16 @@ module.exports = {
           production: {
             host: siteUrl,
             policy: [{ userAgent: '*', disallow: ['/'] }], // ***IMPORTANT*** Update this later once site is ready
-            sitemap: `${siteUrl}sitemap/sitemap-index.xml`,
+            sitemap: `${siteUrl}/sitemap/sitemap-index.xml`,
           },
           'branch-deploy': {
             host: siteUrl,
             policy: [{ userAgent: '*', disallow: ['/'] }],
-            sitemap: `${siteUrl}sitemap/sitemap-index.xml`,
+            sitemap: `${siteUrl}/sitemap/sitemap-index.xml`,
           },
           'deploy-preview': {
             host: siteUrl,
-            sitemap: `${siteUrl}sitemap/sitemap-index.xml`,
+            sitemap: `${siteUrl}/sitemap/sitemap-index.xml`,
           },
         },
       }
