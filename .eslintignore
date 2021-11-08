@@ -1,0 +1,7 @@
+.env
+gatsby*
+.gitignore
+jsconfig.json
+node_modules/
+package*
+public/
