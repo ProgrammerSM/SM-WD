@@ -2,8 +2,8 @@
 import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { ThemeProvider } from '@emotion/react'
 import { withPrefix } from 'gatsby'
-import { ThemeContext, ThemeProvider } from '@emotion/react'
 
 // Components
 
@@ -18,9 +18,7 @@ import 'styles/typography.scss'
 
 // PropTypes
 const propTypes = {}
-const Layout = ({
-  children
-}) => {
+const Layout = ({ children }) => {
   const {
     author,
     description,
@@ -43,13 +41,14 @@ const Layout = ({
     ...commonThemeValues,
     ...themeColorGroups[themeName],
   }
-  
+
+  /* eslint-disable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
   return (
     <>
       <Helmet>
         <html lang='en' />
 
-        <meta name="author" content={author} />
+        <meta content={author} name='author' />
         <meta content='text/html; charset=utf-8' httpEquiv='Content-Type' />
         <meta content='width=device-width, initial-scale=0.86, maximum-scale=3.0, minimum-scale=0.86' name='viewport' />
         <meta content='noindex nofollow' name='robots' />
@@ -99,9 +98,9 @@ const Layout = ({
             display: 'flex',
             height: '100vh',
             justifyContent: 'center',
-            textAlign: 'center', 
+            textAlign: 'center',
             width: '100vw',
-          }} 
+          }}
         >
           {/* {children} */}
           <h1>Website Coming Soon</h1>
@@ -109,6 +108,7 @@ const Layout = ({
       </ThemeProvider>
     </>
   )
+  /* eslint-enable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
 }
 
 Layout.propTypes = propTypes

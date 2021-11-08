@@ -1,7 +1,7 @@
 export default {
   fontFamily: {
     jura: '\'Jura\', sans-serif',
-    orbitron: '\'Orbitron\', sans-serif'
+    orbitron: '\'Orbitron\', sans-serif',
   },
   space: {
     extraLarge: '1.5rem',

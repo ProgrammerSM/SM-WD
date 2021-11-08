@@ -1,16 +1,14 @@
-require("dotenv").config({
-  path: `.env`,
-})
+require('dotenv').config({ path: `.env` })
 
 const {
   NODE_ENV,
   URL: NETLIFY_SITE_URL = 'https://www.sm-wd.com/',
   DEPLOY_PRIME_URL: NETLIFY_DEPLOY_URL = NETLIFY_SITE_URL,
-  CONTEXT: NETLIFY_ENV = NODE_ENV
-} = process.env;
+  CONTEXT: NETLIFY_ENV = NODE_ENV,
+} = process.env
 
-const isNetlifyProduction = NETLIFY_ENV === 'production';
-const siteUrl = isNetlifyProduction ? NETLIFY_SITE_URL : NETLIFY_DEPLOY_URL;
+const isNetlifyProduction = NETLIFY_ENV === 'production'
+const siteUrl = isNetlifyProduction ? NETLIFY_SITE_URL : NETLIFY_DEPLOY_URL
 
 module.exports = {
   siteMetadata: {
@@ -47,15 +45,11 @@ module.exports = {
     },
     {
       resolve: 'gatsby-plugin-google-analytics',
-      options: {
-        trackingId: process.env.GATSBY_GA_ID,
-      },
+      options: { trackingId: process.env.GATSBY_GA_ID },
     },
     {
       resolve: 'gatsby-plugin-manifest',
-      options: {
-        icon: 'src/images/icon.png',
-      },
+      options: { icon: 'src/images/icon.png' },
     },
     {
       resolve: 'gatsby-plugin-robots-txt',
@@ -64,12 +58,22 @@ module.exports = {
         env: {
           production: {
             host: siteUrl,
-            policy: [{ userAgent: '*', disallow: ['/'] }], // ***IMPORTANT*** Update this later once site is ready
+            policy: [
+              {
+                userAgent: '*',
+                disallow: ['/'],
+              },
+            ], // ***IMPORTANT*** Update this later once site is ready
             sitemap: `${siteUrl}/sitemap/sitemap-index.xml`,
           },
           'branch-deploy': {
             host: siteUrl,
-            policy: [{ userAgent: '*', disallow: ['/'] }],
+            policy: [
+              {
+                userAgent: '*',
+                disallow: ['/'],
+              },
+            ],
             sitemap: `${siteUrl}/sitemap/sitemap-index.xml`,
           },
           'deploy-preview': {
@@ -77,7 +81,7 @@ module.exports = {
             sitemap: `${siteUrl}/sitemap/sitemap-index.xml`,
           },
         },
-      }
+      },
     },
     'gatsby-transformer-remark',
     'gatsby-plugin-sharp',
@@ -103,4 +107,4 @@ module.exports = {
       options: { develop: true }, // Activates purging in npm run develop
     }, // Must be after other CSS plugins
   ],
-};
+}
