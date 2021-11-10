@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ThemeProvider } from '@emotion/react'
-import { withPrefix } from 'gatsby'
 
 // Components
 
@@ -49,9 +48,9 @@ const Layout = ({ children }) => {
         <html lang='en' />
 
         <meta content={author} name='author' />
+        <meta content='noindex nofollow' name='robots' />
         <meta content='text/html; charset=utf-8' httpEquiv='Content-Type' />
         <meta content='width=device-width, initial-scale=0.86, maximum-scale=3.0, minimum-scale=0.86' name='viewport' />
-        <meta content='noindex nofollow' name='robots' />
 
         <title>{title}</title>
         <meta content={title} property='og:title' />
@@ -62,8 +61,8 @@ const Layout = ({ children }) => {
         <meta content={title} property='og:site_name' />
         <meta content='website' property='og:type' />
 
-        <meta content={canonical} property='og:url' />
         <link href={canonical} rel='canonical' />
+        <meta content={canonical} property='og:url' />
 
         <link href='./favicon.ico' rel='shortcut icon' />
         <link href='./images/alt-favicons/favicon-16x16.png' rel='icon' sizes='16x16' type='image/png' />
@@ -94,12 +93,12 @@ const Layout = ({ children }) => {
 
         <meta content='#FFFFFF' name='theme-color' />
         <meta content='#000000' name='msapplication-TileColor' />
+        <meta content='./browserconfig.xml' name='msapplication-config' />
         <meta content='./images/mstile-icons/mstile-70x70.png' name='msapplication-TileImage' sizes='70x70' />
         <meta content='./images/mstile-icons/mstile-150x150.png' name='msapplication-TileImage' sizes='144x144' />
         <meta content='./images/mstile-icons/mstile-144x144.png' name='msapplication-TileImage' sizes='150x150' />
         <meta content='./images/mstile-icons/mstile-310x150.png' name='msapplication-TileImage' sizes='310x150' />
         <meta content='./images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
-        <meta content='./browserconfig.xml' name='msapplication-config' />
       </Helmet>
       <ThemeProvider theme={theme}>
         <main>
