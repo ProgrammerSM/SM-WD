@@ -48,10 +48,6 @@ module.exports = {
       options: { trackingId: process.env.GATSBY_GA_ID },
     },
     {
-      resolve: 'gatsby-plugin-manifest',
-      options: { icon: 'src/images/icon.png' },
-    },
-    {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
         resolveEnv: () => NETLIFY_ENV,
@@ -86,14 +82,6 @@ module.exports = {
     'gatsby-transformer-remark',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: './src/images/',
-      },
-      __key: 'images',
-    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
