@@ -101,8 +101,18 @@ const Layout = ({ children }) => {
         <meta content='/images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
       </Helmet>
       <ThemeProvider theme={theme}>
-        <main>
-          {children}
+        <main
+          style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          textAlign: 'center',
+          width: '100vw',
+          }}
+        >
+          {/* {children} */}
+          <h1>Website Coming Soon</h1>
         </main>
       </ThemeProvider>
     </>
