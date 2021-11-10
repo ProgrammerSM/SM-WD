@@ -43,7 +43,10 @@
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "^11.5.0",
-    "eslint": "^8.2.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-eslint": "^7.0.0",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-destructuring-newline": "0.0.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-json": "^3.1.0",
