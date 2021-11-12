@@ -4,6 +4,7 @@ import React from 'react'
 
 // Components
 import Layout from 'components/global-components/Layout'
+import TestComp from 'components/ThemeTransitionExample'
 
 // Markup
 const IndexPage = () => (
@@ -11,6 +12,8 @@ const IndexPage = () => (
     <Helmet>
       <title>Coming Soon</title>
     </Helmet>
+
+    <TestComp />
   </Layout>
 )
 

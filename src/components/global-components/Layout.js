@@ -2,13 +2,11 @@
 import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
 
-// Components
+// Context
+import { CurrentThemeProvider } from 'context/CurrentThemeContext'
 
 // Scripts
-import commonThemeValues from 'scripts/commonThemeValues'
-import themeColorGroups from 'scripts/themeColorGroups'
 import useSiteMetadata from 'scripts/useSiteMetadata'
 
 // Styles
@@ -33,12 +31,6 @@ const Layout = ({ children }) => {
       [currentURL] = currentURL.split('?')
 
     canonical = currentURL
-  }
-
-  const themeName = 'light'
-  const theme = {
-    ...commonThemeValues,
-    ...themeColorGroups[themeName],
   }
 
   /* eslint-disable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
@@ -100,11 +92,11 @@ const Layout = ({ children }) => {
         <meta content='/images/mstile-icons/mstile-310x150.png' name='msapplication-TileImage' sizes='310x150' />
         <meta content='/images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
       </Helmet>
-      <ThemeProvider theme={theme}>
+      <CurrentThemeProvider>
         <main>
           {children}
         </main>
-      </ThemeProvider>
+      </CurrentThemeProvider>
     </>
   )
   /* eslint-enable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
