@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+// Components
+import PageLayout from './PageLayout'
+
 // Context
 import { CurrentThemeProvider } from 'context/CurrentThemeContext'
 
@@ -14,8 +17,8 @@ import 'styles/reset.scss'
 import 'styles/typography.scss'
 
 // PropTypes
-const propTypes = {}
-const Layout = ({ children }) => {
+const propTypes = { children: PropTypes.node }
+const PageWrapper = ({ children }) => {
   const {
     author,
     description,
@@ -93,14 +96,14 @@ const Layout = ({ children }) => {
         <meta content='/images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
       </Helmet>
       <CurrentThemeProvider>
-        <main>
+        <PageLayout>
           {children}
-        </main>
+        </PageLayout>
       </CurrentThemeProvider>
     </>
   )
   /* eslint-enable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
 }
 
-Layout.propTypes = propTypes
-export default Layout
+PageWrapper.propTypes = propTypes
+export default PageWrapper
