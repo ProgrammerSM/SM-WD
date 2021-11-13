@@ -14,14 +14,15 @@ import commonThemeValues from 'data/commonThemeValues'
 import themeColorGroups from 'data/themeColorGroups'
 
 // Variables
-const themeDefault = 'light'
-const CurrentThemeContext = createContext(themeDefault)
+const currentThemeDefaultValue = {}
+const CurrentThemeContext = createContext(currentThemeDefaultValue)
 // PropTypes
 const propTypes = { children: PropTypes.node }
 const CurrentThemeProvider = ({ children }) => {
   const [themeName, setThemeName] = useLocalStorage('smwdColorThemeName', 'light')
   const [customTheme, setCustomTheme] = useLocalStorage('smwdCustomTheme', { ...themeColorGroups.light })
   const [hasCustomTheme, setHasCustomTheme] = useLocalStorage('smwdHasCustomTheme', false)
+  const previousThemeRef = useRef(themeColorGroups.light)
 
   let theme
   if (themeName === 'custom')
@@ -29,17 +30,21 @@ const CurrentThemeProvider = ({ children }) => {
       ...commonThemeValues,
       ...customTheme,
     }
-  else
+  else {
+    previousThemeRef.current = themeColorGroups[themeName]
+
     theme = {
       ...commonThemeValues,
       ...themeColorGroups[themeName],
     }
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <CurrentThemeContext.Provider value={{
         customTheme,
         hasCustomTheme,
+        previousThemeRef,
         setCustomTheme,
         setHasCustomTheme,
         setThemeName,

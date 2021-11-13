@@ -19,12 +19,12 @@ const PageLayout = ({ children }) => {
   return (
     <div
       css={css`
+        max-width: 100vw;
+        min-height: 100vh;
         background-color: ${theme.colors.backgroundColor};
         color: ${theme.colors.fontColor};
-        height: 100vh;
         transition-duration: .5s;
         transition-property: background-color, color;
-        width: 100vw;
       `}
     >
       <main>{children}</main>

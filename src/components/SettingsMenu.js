@@ -1,4 +1,5 @@
 // Modules
+import { SketchPicker } from 'react-color'
 import React, { useContext } from 'react'
 
 // Components
@@ -11,8 +12,11 @@ import themeColorGroups from 'data/themeColorGroups'
 
 const SettingsMenu = () => {
   const {
+    customTheme,
     themeName,
     hasCustomTheme,
+    previousThemeRef,
+    setHasCustomTheme,
     setThemeName,
     setCustomTheme,
   } = useContext(CurrentThemeContext)
@@ -20,16 +24,20 @@ const SettingsMenu = () => {
   const themeChangeHandler = event => {
     setThemeName(event.target.value)
 
-    if (event.target.value === 'custom')
-      if (!hasCustomTheme)
-        setCustomTheme({ ...themeColorGroups[themeName] })
-      else
-        setCustomTheme({
-          colors: {
-            backgroundColor: 'green',
-            fontColor: 'red',
-          },
-        })
+    if (event.target.value === 'custom' && !hasCustomTheme)
+      setCustomTheme({ ...themeColorGroups[themeName] })
+  }
+
+  const customThemeHandler = colorName => color => {
+    const updatedCustomThemeObject = {
+      colors: {
+        ...customTheme.colors,
+        [colorName]: color.hex,
+      },
+    }
+
+    setCustomTheme(updatedCustomThemeObject)
+    setHasCustomTheme(true)
   }
 
   return (
@@ -52,6 +60,36 @@ const SettingsMenu = () => {
 
         <option value='custom'>CUSTOM</option>
       </select>
+      {
+        themeName === 'custom' && (
+          <>
+            <button
+              type='button'
+              onClick={() => { setCustomTheme(previousThemeRef.current) }}
+            >
+              Reset
+            </button>
+            {
+              Object.keys(customTheme.colors).map(key => {
+                const colorName = key.split('Color').join(' ')
+                const formattedColorName = colorName.charAt(0).toUpperCase() + colorName.slice(1)
+
+                return (
+                  <div key={formattedColorName}>
+                    <p>{formattedColorName}</p>
+                    <SketchPicker
+                      disableAlpha
+                      color={customTheme.colors[key]}
+                      presetColors={themeColorGroups.all}
+                      onChangeComplete={customThemeHandler(key)}
+                    />
+                  </div>
+                )
+              })
+            }
+          </>
+        )
+      }
     </div>
   )
 }
