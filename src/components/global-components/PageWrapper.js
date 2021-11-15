@@ -2,13 +2,14 @@
 import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
 
 // Components
+import PageLayout from './PageLayout'
+
+// Context
+import { CurrentThemeProvider } from 'context/CurrentThemeContext'
 
 // Scripts
-import commonThemeValues from 'scripts/commonThemeValues'
-import themeColorGroups from 'scripts/themeColorGroups'
 import useSiteMetadata from 'scripts/useSiteMetadata'
 
 // Styles
@@ -16,8 +17,8 @@ import 'styles/reset.scss'
 import 'styles/typography.scss'
 
 // PropTypes
-const propTypes = {}
-const Layout = ({ children }) => {
+const propTypes = { children: PropTypes.node }
+const PageWrapper = ({ children }) => {
   const {
     author,
     description,
@@ -33,12 +34,6 @@ const Layout = ({ children }) => {
       [currentURL] = currentURL.split('?')
 
     canonical = currentURL
-  }
-
-  const themeName = 'light'
-  const theme = {
-    ...commonThemeValues,
-    ...themeColorGroups[themeName],
   }
 
   /* eslint-disable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
@@ -100,15 +95,15 @@ const Layout = ({ children }) => {
         <meta content='/images/mstile-icons/mstile-310x150.png' name='msapplication-TileImage' sizes='310x150' />
         <meta content='/images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
       </Helmet>
-      <ThemeProvider theme={theme}>
-        <main>
+      <CurrentThemeProvider>
+        <PageLayout>
           {children}
-        </main>
-      </ThemeProvider>
+        </PageLayout>
+      </CurrentThemeProvider>
     </>
   )
   /* eslint-enable react/jsx-max-props-per-line -- easier to read the meta data on one line each */
 }
 
-Layout.propTypes = propTypes
-export default Layout
+PageWrapper.propTypes = propTypes
+export default PageWrapper
