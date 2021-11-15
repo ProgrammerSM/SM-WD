@@ -9,7 +9,7 @@ import {
 import PropTypes from 'prop-types'
 
 // Components
-import SettingsMenu from 'components/SettingsMenu'
+import SettingsMenu from 'components/settings-menu/SettingsMenu'
 
 // PropTypes
 const propTypes = { children: PropTypes.node }

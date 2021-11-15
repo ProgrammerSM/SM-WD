@@ -1,8 +1,11 @@
 // Modules
-import { HexColorPicker } from 'react-colorful'
-import React, { useContext } from 'react'
+import React, {
+  useContext,
+  useState,
+} from 'react'
 
 // Components
+import CustomColorMenu from './sub-components/CustomColorMenu'
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
@@ -21,6 +24,11 @@ const SettingsMenu = () => {
     setCustomTheme,
   } = useContext(CurrentThemeContext)
 
+  const [selectedCustomColorObject, setSelectedCustomColorObject] = useState({
+    color: customTheme.colors.primaryColor,
+    colorName: 'primaryColor',
+  })
+
   const themeChangeHandler = event => {
     setThemeName(event.target.value)
 
@@ -37,7 +45,29 @@ const SettingsMenu = () => {
     }
 
     setCustomTheme(updatedCustomThemeObject)
-    setHasCustomTheme(true)
+
+    if (!hasCustomTheme)
+      setHasCustomTheme(true)
+  }
+
+  const customColorInputHandler = event => {
+    const enteredColor = event.target.value
+    customThemeHandler(enteredColor, selectedCustomColorObject.colorName)
+
+    setSelectedCustomColorObject({
+      ...selectedCustomColorObject,
+      color: enteredColor,
+    })
+  }
+
+  const resetCustomThemeHandler = () => {
+    const previousTheme = previousThemeRef.current
+
+    setCustomTheme(previousTheme)
+    setSelectedCustomColorObject({
+      ...selectedCustomColorObject,
+      color: previousTheme.colors[selectedCustomColorObject.colorName],
+    })
   }
 
   return (
@@ -60,34 +90,16 @@ const SettingsMenu = () => {
 
         <option value='custom'>CUSTOM</option>
       </select>
-      {
-        themeName === 'custom' && (
-          <>
-            <button
-              type='button'
-              onClick={() => { setCustomTheme(previousThemeRef.current) }}
-            >
-              Reset
-            </button>
-            {
-              Object.keys(customTheme.colors).map(key => {
-                const colorName = key.split('Color').join(' ')
-                const formattedColorName = colorName.charAt(0).toUpperCase() + colorName.slice(1)
-
-                return (
-                  <div key={formattedColorName}>
-                    <p>{formattedColorName}</p>
-                    <HexColorPicker
-                      color={customTheme.colors[key]}
-                      onChange={color => customThemeHandler(color, key)}
-                    />
-                  </div>
-                )
-              })
-            }
-          </>
-        )
-      }
+      {themeName === 'custom' && (
+        <CustomColorMenu
+          customColorInputHandler={customColorInputHandler}
+          customTheme={customTheme}
+          customThemeHandler={customThemeHandler}
+          resetCustomThemeHandler={resetCustomThemeHandler}
+          selectedCustomColorObject={selectedCustomColorObject}
+          setSelectedCustomColorObject={setSelectedCustomColorObject}
+        />
+      )}
     </div>
   )
 }
