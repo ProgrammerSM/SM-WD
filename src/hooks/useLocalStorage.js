@@ -4,7 +4,7 @@ import {
 } from 'react'
 
 export default function useLocalStorage(key, initialValue, forceUpdate) {
-  const localStorageValue = window.localStorage.getItem(key)
+  const localStorageValue = typeof window !== 'undefined' && window.localStorage.getItem(key)
 
   let init
   try {
