@@ -1,5 +1,5 @@
 // Modules
-import { SketchPicker } from 'react-color'
+import { HexColorPicker } from 'react-colorful'
 import React, { useContext } from 'react'
 
 // Components
@@ -28,11 +28,11 @@ const SettingsMenu = () => {
       setCustomTheme({ ...themeColorGroups[themeName] })
   }
 
-  const customThemeHandler = colorName => color => {
+  const customThemeHandler = (color, colorName) => {
     const updatedCustomThemeObject = {
       colors: {
         ...customTheme.colors,
-        [colorName]: color.hex,
+        [colorName]: color,
       },
     }
 
@@ -77,11 +77,9 @@ const SettingsMenu = () => {
                 return (
                   <div key={formattedColorName}>
                     <p>{formattedColorName}</p>
-                    <SketchPicker
-                      disableAlpha
+                    <HexColorPicker
                       color={customTheme.colors[key]}
-                      presetColors={themeColorGroups.all}
-                      onChangeComplete={customThemeHandler(key)}
+                      onChange={color => customThemeHandler(color, key)}
                     />
                   </div>
                 )

@@ -1,6 +1,5 @@
 /* eslint-disable sort-keys -- preferred order */
 export default {
-  all: ['#FFFFFF', '#000000'],
   dark: {
     colors: {
       primaryColor: '#FFFFFF',
