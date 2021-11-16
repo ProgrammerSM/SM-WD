@@ -1,9 +1,5 @@
-/** @jsx jsx */
-import {
-  css,
-  jsx,
-  useTheme,
-} from '@emotion/react'
+import React from 'react'
+import { useTheme } from '@emotion/react'
 
 // Modules
 import PropTypes from 'prop-types'
@@ -16,16 +12,16 @@ const propTypes = { children: PropTypes.node }
 const PageLayout = ({ children }) => {
   const theme = useTheme()
 
-  return (
+  return typeof window !== 'undefined' && (
     <div
-      css={css`
-        max-width: 100vw;
-        min-height: 100vh;
-        background-color: ${theme.colors.backgroundColor};
-        color: ${theme.colors.fontColor};
-        transition-duration: .5s;
-        transition-property: background-color, color;
-      `}
+      style={{
+        backgroundColor: theme.colors.backgroundColor,
+        color: theme.colors.fontColor,
+        maxWidth: '100vw',
+        minHeight: '100vh',
+        transitionDuration: '.5s',
+        transitionProperty: 'background-color, color',
+      }}
     >
       <main>{children}</main>
       <SettingsMenu />

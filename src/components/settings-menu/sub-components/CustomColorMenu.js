@@ -54,6 +54,7 @@ const CustomColorTheme = ({
       onChange={color => customThemeHandler(color, selectedCustomColorObject.colorName)}
     />
     <input
+      maxLength={7}
       type='text'
       value={selectedCustomColorObject.color}
       onChange={customColorInputHandler}

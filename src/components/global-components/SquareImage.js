@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 
 // Components
 
@@ -19,14 +20,17 @@ const SquareImage = ({
   imageAlt,
   width,
 }) => {
+  const theme = useTheme()
   const ShapeStyles = styled.div`
     position: relative;
     display: inline-block;
+    margin: 8px;
+    background-color: ${theme.colors.primaryColor}40;
 
     .top-shape,
     .bottom-shape {
       position: absolute;
-      width: calc(100% + 2px);
+      width: 100%;
       height: 100%;
       max-height: 40%;
 
@@ -52,22 +56,22 @@ const SquareImage = ({
     } 
 
     .top-shape {
-      top: -2px;
-      right: -2px;
-      border-top: 2px solid dodgerblue;
-      border-right: 2px solid dodgerblue;
+      top: 0;
+      right: 0;
+      border-top: 2px solid ${theme.colors.primaryColor};
+      border-right: 2px solid ${theme.colors.primaryColor};
 
       &::before {
-        top: -8px;
+        top: -10px;
         right: 30%;
-        border-top: 5px solid dodgerblue;
+        border-top: 5px solid ${theme.colors.accentColor2};
       }
 
       &::after {
-        top: -8px;
-        right: -8px;
-        border-top: 5px solid dodgerblue;
-        border-right: 5px solid dodgerblue;
+        top: -10px;
+        right: -10px;
+        border-top: 5px solid ${theme.colors.accentColor1};
+        border-right: 5px solid ${theme.colors.accentColor1};
       }
 
       .drop-shape {
@@ -76,7 +80,7 @@ const SquareImage = ({
         left: 25px;
         width: 30%;
         height: 20px;
-        border-bottom: 2px solid dodgerblue;
+        border-bottom: 2px solid ${theme.colors.primaryColor};
 
         &::before,
         &::after {
@@ -88,62 +92,62 @@ const SquareImage = ({
 
         &::before {
           left: -7px;
-          border-left: 2px solid dodgerblue;
+          border-left: 2px solid ${theme.colors.primaryColor};
           transform: rotate(-35deg);
         }
 
         &::after {
           right: -7px;
-          border-right: 2px solid dodgerblue;
+          border-right: 2px solid ${theme.colors.primaryColor};
           transform: rotate(35deg);
         }
       }
     }
 
     .bottom-shape {
-      bottom: -2px;
-      left: -2px;
-      border-bottom: 2px solid dodgerblue;
-      border-left: 2px solid dodgerblue;
+      bottom: 0;
+      left: 0;
+      border-bottom: 2px solid ${theme.colors.primaryColor};
+      border-left: 2px solid ${theme.colors.primaryColor};
 
       &::before {
-        bottom: -8px;
-        left: -8px;
-        border-bottom: 5px solid dodgerblue;
-        border-left: 5px solid dodgerblue;
+        bottom: -10px;
+        left: -10px;
+        border-bottom: 5px solid ${theme.colors.accentColor1};
+        border-left: 5px solid ${theme.colors.accentColor1};
       }
 
       &::after {
-        bottom: -8px;
+        bottom: -10px;
         left: 30%;
-        border-bottom: 5px solid dodgerblue;
+        border-bottom: 5px solid ${theme.colors.accentColor2};
       }
 
       .pop-shape {
         position: absolute;
         right: 25px;
-        bottom: 25px;
+        bottom: 0;
         width: 75%;
         height: 25px;
-        border-bottom: 2px solid dodgerblue;
+        border-top: 2px solid ${theme.colors.primaryColor};
 
         &::before,
         &::after {
           position: absolute;
-          bottom: -30px;
+          bottom: -5px;
           height: 32px;
           content: '';
         }
 
         &::before {
           left: 50%;
-          border-left: 2px solid dodgerblue;
+          border-left: 2px solid ${theme.colors.primaryColor};
           transform: rotate(35deg);
         }
 
         &::after {
           right: -10px;
-          border-right: 2px solid dodgerblue;
+          border-right: 2px solid ${theme.colors.primaryColor};
           transform: rotate(-35deg);
         }
       }

@@ -1,6 +1,7 @@
 // Modules
 import React, {
   useContext,
+  useRef,
   useState,
 } from 'react'
 
@@ -24,6 +25,7 @@ const SettingsMenu = () => {
     setCustomTheme,
   } = useContext(CurrentThemeContext)
 
+  const previouslyEnteredValueRef = useRef('#')
   const [selectedCustomColorObject, setSelectedCustomColorObject] = useState({
     color: customTheme.colors.primaryColor,
     colorName: 'primaryColor',
@@ -45,19 +47,28 @@ const SettingsMenu = () => {
     }
 
     setCustomTheme(updatedCustomThemeObject)
+    setSelectedCustomColorObject({
+      ...selectedCustomColorObject,
+      color,
+    })
 
     if (!hasCustomTheme)
       setHasCustomTheme(true)
   }
 
   const customColorInputHandler = event => {
-    const enteredColor = event.target.value
-    customThemeHandler(enteredColor, selectedCustomColorObject.colorName)
+    const hexRegEx = /^#[0-9a-f]{0,6}$/i
+    let enteredColor = event.target.value
 
-    setSelectedCustomColorObject({
-      ...selectedCustomColorObject,
-      color: enteredColor,
-    })
+    if (!enteredColor.includes('#'))
+      enteredColor = `#${enteredColor}`
+
+    if (hexRegEx.test(enteredColor))
+      previouslyEnteredValueRef.current = enteredColor
+    else
+      enteredColor = previouslyEnteredValueRef.current
+
+    customThemeHandler(enteredColor, selectedCustomColorObject.colorName)
   }
 
   const resetCustomThemeHandler = () => {
