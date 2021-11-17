@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 import React from 'react'
 
 // Components
-import Layout from 'components/global-components/PageWrapper'
+import Layout from 'components/global-components/PageLayout'
 
 // Markup
 const NotFoundPage = () => (

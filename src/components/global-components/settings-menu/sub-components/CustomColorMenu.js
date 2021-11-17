@@ -11,7 +11,7 @@ const propTypes = {
   customTheme: PropTypes.shape({ colors: PropTypes.objectOf(PropTypes.string).isRequired }).isRequired,
   customThemeHandler: PropTypes.func.isRequired,
   resetCustomThemeHandler: PropTypes.func.isRequired,
-  selectedCustomColorObject: PropTypes.func.isRequired,
+  selectedCustomColorObject: PropTypes.objectOf(PropTypes.any).isRequired,
   setSelectedCustomColorObject: PropTypes.func.isRequired,
 }
 
@@ -54,9 +54,9 @@ const CustomColorTheme = ({
       onChange={color => customThemeHandler(color, selectedCustomColorObject.colorName)}
     />
     <input
+      id='custom-theme-input'
       maxLength={7}
       type='text'
-      value={selectedCustomColorObject.color}
       onChange={customColorInputHandler}
     />
   </>

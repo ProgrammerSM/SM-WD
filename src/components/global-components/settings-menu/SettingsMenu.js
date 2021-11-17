@@ -39,21 +39,24 @@ const SettingsMenu = () => {
   }
 
   const customThemeHandler = (color, colorName) => {
+    const uppercaseColor = color.toUpperCase()
     const updatedCustomThemeObject = {
       colors: {
         ...customTheme.colors,
-        [colorName]: color,
+        [colorName]: uppercaseColor,
       },
     }
 
     setCustomTheme(updatedCustomThemeObject)
     setSelectedCustomColorObject({
       ...selectedCustomColorObject,
-      color,
+      uppercaseColor,
     })
 
     if (!hasCustomTheme)
       setHasCustomTheme(true)
+
+    document.getElementById('custom-theme-input').value = uppercaseColor
   }
 
   const customColorInputHandler = event => {

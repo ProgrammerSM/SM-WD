@@ -3,19 +3,32 @@ import {
   useState,
 } from 'react'
 
-export default function useLocalStorage(key, initialValue, forceUpdate) {
-  const localStorageValue = typeof window !== 'undefined' && window.localStorage.getItem(key)
+const parseLocalStorage = (key, fallback) => {
+  if (typeof window === 'undefined')
+    return fallback
 
-  let init
+  const localStorageValue = window.localStorage.getItem(key)
+
+  if (!localStorageValue)
+    return fallback
+
   try {
-    init = localStorageValue && !forceUpdate
-      ? JSON.parse(localStorageValue)
-      : initialValue
+    return JSON.parse(localStorageValue)
   } catch {
-    init = initialValue
+    return fallback
   }
+}
 
+export default function useLocalStorage(key, initialValue) {
+
+  const init = parseLocalStorage(key, initialValue)
   const [storedValue, setStoredValue] = useState(init)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStoredValue(parseLocalStorage(key, initialValue))
+    }, 100)
+  }, [])
 
   useEffect(() => {
     try {

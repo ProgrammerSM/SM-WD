@@ -1,8 +1,10 @@
 // Modules
 import PropTypes from 'prop-types'
-import React from 'react'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
+import React, { useContext } from 'react'
+
+// Context
+import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
 // Components
 
@@ -20,7 +22,7 @@ const SquareImage = ({
   imageAlt,
   width,
 }) => {
-  const theme = useTheme()
+  const { theme } = useContext(CurrentThemeContext)
   const ShapeStyles = styled.div`
     position: relative;
     display: inline-block;
