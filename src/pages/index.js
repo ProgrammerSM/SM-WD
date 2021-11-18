@@ -19,10 +19,19 @@ const IndexPage = () => (
       <TestComp />
       <div
         style={{
-            margin: '0 auto',
-            maxWidth: '50%',
+          display: 'flex',
+          justifyContent: 'center',
+          margin: '0 auto',
+          maxWidth: '1800px',
+          gap: '50px',
         }}
       >
+        <SquareImage
+          height={400}
+          image='https://picsum.photos/500/400'
+          imageAlt='testing'
+          width={500}
+        />
         <SquareImage
           height={400}
           image='https://picsum.photos/500/400'

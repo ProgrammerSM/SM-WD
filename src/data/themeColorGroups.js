@@ -1,15 +1,5 @@
 /* eslint-disable sort-keys -- preferred order */
 export default {
-  dark: {
-    colors: {
-      primaryColor: '#FFFFFF',
-      fontColor: '#FFFFFF',
-      backgroundColor: '#000000',
-      accentColor1: '#FFFFFF',
-      accentColor2: '#FFFFFF',
-      accentColor3: '#FFFFFF',
-    },
-  },
   light: {
     colors: {
       primaryColor: '#000000',
@@ -18,6 +8,16 @@ export default {
       accentColor1: '#000000',
       accentColor2: '#000000',
       accentColor3: '#000000',
+    },
+  },
+  dark: {
+    colors: {
+      primaryColor: '#FFFFFF',
+      fontColor: '#FFFFFF',
+      backgroundColor: '#000000',
+      accentColor1: '#FFFFFF',
+      accentColor2: '#FFFFFF',
+      accentColor3: '#FFFFFF',
     },
   },
 }

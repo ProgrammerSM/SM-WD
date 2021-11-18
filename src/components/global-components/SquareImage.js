@@ -1,7 +1,11 @@
 // Modules
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import React, { useContext } from 'react'
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+} from 'react'
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
@@ -22,143 +26,248 @@ const SquareImage = ({
   imageAlt,
   width,
 }) => {
+  const imageContainerRef = useRef()
+  useEffect(() => {
+    const imageContainter = imageContainerRef.current
+
+    if (imageContainter) {
+      const topShape = imageContainter.querySelector('.top-shape')
+      const bottomShape = imageContainter.querySelector('.bottom-shape')
+      const topCorner = imageContainter.querySelector('.top-corner')
+      const bottomCorner = imageContainter.querySelector('.bottom-corner')
+      const topLine = imageContainter.querySelector('.top-line')
+      const bottomLine = imageContainter.querySelector('.bottom-line')
+      const dropShape = imageContainter.querySelector('.drop-shape')
+      const popShape = imageContainter.querySelector('.pop-shape')
+
+      setTimeout(() => {
+        imageContainter.classList.add('animate')
+      }, 200)
+
+      setTimeout(() => {
+        topShape.classList.add('animate')
+        bottomShape.classList.add('animate')
+      }, 800)
+
+      setTimeout(() => {
+        dropShape.classList.add('animate')
+        popShape.classList.add('animate')
+        topCorner.classList.add('animate')
+        bottomCorner.classList.add('animate')
+        topLine.classList.add('animate')
+        bottomLine.classList.add('animate')
+      }, 1000)
+    }
+  }, [])
+
   const { theme } = useContext(CurrentThemeContext)
   const ShapeStyles = styled.div`
     position: relative;
     display: inline-block;
     margin: 8px;
     background-color: ${theme.colors.primaryColor}40;
+    opacity: 0;
+    transition: opacity .5s linear;
+
+    &.animate { opacity: 1; }
+    .top-shape,
+    .top-line,
+    .top-corner,
+    .bottom-shape,
+    .bottom-line,
+    .bottom-corner {
+      position: absolute;
+    }
 
     .top-shape,
     .bottom-shape {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+      width: 0;
+      height: 0;
       max-height: 40%;
+      transition: width .2s linear, height .2s .2s linear;
 
-      &::before,
-      &::after {
-        position: absolute;
-        content: '';
+      &.animate {
+        width: 100%;
+        height: 100%;
       }
     }
 
-    .top-shape::after,
-    .bottom-shape::before {
-      width: 100%;
-      max-width: 25%;
-      height: 100%;
-      max-height: 50%;
-    }
-    
-    .top-shape::before,
-    .bottom-shape::after {
-      width: 100%;
+    .top-line,
+    .bottom-line {
+      width: 0;
       max-width: 50%;
+      transition: width .2s linear .3s;
+
+      &.animate {
+        width: 100%;
+      }
     } 
+
+    .top-corner,
+    .bottom-corner {
+      width: 0;
+      max-width: 25%;
+      height: 0;
+      max-height: 50%;
+      transition: width .2s linear, height .2s linear .1s;
+
+      &.animate {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .drop-shape,
+    .pop-shape {
+      transition: width .2s linear;
+
+      &::before {
+        transition: height .2s linear;
+      }
+      
+      &::after {
+        transition: height .2s linear .2s;
+      }
+    }
 
     .top-shape {
       top: 0;
       right: 0;
-      border-top: 2px solid ${theme.colors.primaryColor};
-      border-right: 2px solid ${theme.colors.primaryColor};
 
-      &::before {
+      &.animate {
+        border-top: 2px solid ${theme.colors.primaryColor};
+        border-left: 2px solid ${theme.colors.primaryColor};
+      }
+
+      .top-line {
         top: -10px;
-        right: 30%;
+        left: 30%;
         border-top: 5px solid ${theme.colors.accentColor2};
       }
 
-      &::after {
+      .top-corner {
         top: -10px;
-        right: -10px;
-        border-top: 5px solid ${theme.colors.accentColor1};
-        border-right: 5px solid ${theme.colors.accentColor1};
+        left: -10px;
+        
+        &.animate {
+          border-top: 5px solid ${theme.colors.accentColor1};
+          border-left: 5px solid ${theme.colors.accentColor1};
+        }
       }
 
       .drop-shape {
         position: absolute;
         top: 0;
-        left: 25px;
-        width: 30%;
+        right: 25px;
+        width: 0;
         height: 20px;
-        border-bottom: 2px solid ${theme.colors.primaryColor};
 
         &::before,
         &::after {
           position: absolute;
           top: -3px;
-          height: 25px;
+          height: 0;
           content: '';
         }
 
         &::before {
           left: -7px;
-          border-left: 2px solid ${theme.colors.primaryColor};
           transform: rotate(-35deg);
         }
 
         &::after {
           right: -7px;
-          border-right: 2px solid ${theme.colors.primaryColor};
           transform: rotate(35deg);
+        }
+
+        &.animate {
+          width: 30%;
+          border-bottom: 2px solid ${theme.colors.primaryColor};
+
+          &::before,
+          &::after {
+            height: 25px;
+          }
+
+          &::before { border-left: 2px solid ${theme.colors.primaryColor}; }
+          &::after { border-right: 2px solid ${theme.colors.primaryColor}; }
         }
       }
     }
 
     .bottom-shape {
       bottom: 0;
-      left: 0;
-      border-bottom: 2px solid ${theme.colors.primaryColor};
-      border-left: 2px solid ${theme.colors.primaryColor};
+      right: 0;
 
-      &::before {
-        bottom: -10px;
-        left: -10px;
-        border-bottom: 5px solid ${theme.colors.accentColor1};
-        border-left: 5px solid ${theme.colors.accentColor1};
+      &.animate {
+        border-bottom: 2px solid ${theme.colors.primaryColor};
+        border-right: 2px solid ${theme.colors.primaryColor};
       }
 
-      &::after {
+      .bottom-line {
         bottom: -10px;
-        left: 30%;
+        right: 30%;
         border-bottom: 5px solid ${theme.colors.accentColor2};
+      }
+      
+      .bottom-corner {
+        bottom: -10px;
+        right: -10px;
+
+        &.animate {
+          border-bottom: 5px solid ${theme.colors.accentColor1};
+          border-right: 5px solid ${theme.colors.accentColor1};
+        }
       }
 
       .pop-shape {
         position: absolute;
-        right: 25px;
+        left: 25px;
         bottom: 0;
-        width: 75%;
+        width: 0;
         height: 25px;
-        border-top: 2px solid ${theme.colors.primaryColor};
 
         &::before,
         &::after {
           position: absolute;
           bottom: -5px;
-          height: 32px;
+          height: 0;
           content: '';
         }
 
         &::before {
-          left: 50%;
+          right: 50%;
           border-left: 2px solid ${theme.colors.primaryColor};
-          transform: rotate(35deg);
+          transform: rotate(-35deg);
         }
 
         &::after {
-          right: -10px;
+          left: -10px;
           border-right: 2px solid ${theme.colors.primaryColor};
-          transform: rotate(-35deg);
+          transform: rotate(35deg);
+        }
+
+        &.animate {
+          width: 75%;
+          border-top: 2px solid ${theme.colors.primaryColor};
+
+          &::before,
+          &::after {
+            height: 32px;
+          }
+
+          &::before { border-left: 2px solid ${theme.colors.primaryColor}; }
+          &::after { border-right: 2px solid ${theme.colors.primaryColor}; }
         }
       }
     }
   `
 
   return (
-    <ShapeStyles>
+    <ShapeStyles ref={imageContainerRef}>
       <div className='top-shape'>
+        <div className='top-line' />
+        <div className='top-corner' />
         <div className='drop-shape' />
       </div>
       <img
@@ -169,6 +278,8 @@ const SquareImage = ({
       />
       <div className='bottom-shape'>
         <div className='pop-shape' />
+        <div className='bottom-line' />
+        <div className='bottom-corner' />
       </div>
     </ShapeStyles>
   )
