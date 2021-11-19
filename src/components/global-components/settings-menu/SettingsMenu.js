@@ -1,5 +1,12 @@
+/** @jsx jsx */
+import {
+  css,
+  jsx,
+} from '@emotion/react'
+
 // Modules
-import React, {
+import styled from '@emotion/styled'
+import {
   useContext,
   useRef,
   useState,
@@ -14,7 +21,14 @@ import { CurrentThemeContext } from 'context/CurrentThemeContext'
 // Data
 import themeColorGroups from 'data/themeColorGroups'
 
+const SettingsMenuStyles = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`
+
 const SettingsMenu = () => {
+
   const {
     customTheme,
     themeName,
@@ -85,7 +99,13 @@ const SettingsMenu = () => {
   }
 
   return (
-    <div>
+    <SettingsMenuStyles
+      css={css`
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      `}
+    >
       <select
         name='theme-selector'
         value={themeName}
@@ -114,7 +134,7 @@ const SettingsMenu = () => {
           setSelectedCustomColorObject={setSelectedCustomColorObject}
         />
       )}
-    </div>
+    </SettingsMenuStyles>
   )
 }
 

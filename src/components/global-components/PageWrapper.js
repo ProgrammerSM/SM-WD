@@ -15,6 +15,7 @@ const PageWrapper = ({ children }) => {
     height: 100vh;
     background-color: ${theme.colors.backgroundColor};
     color: ${theme.colors.fontColor};
+    overflow-y: auto;
   `
 
   return (

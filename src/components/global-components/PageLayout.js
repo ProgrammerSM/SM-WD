@@ -18,6 +18,7 @@ import useSiteMetadata from 'scripts/useSiteMetadata'
 // Styles
 import 'styles/reset.scss'
 import 'styles/typography.scss'
+import 'styles/global-styles.scss'
 
 // PropTypes
 const propTypes = { children: PropTypes.node }
@@ -41,6 +42,7 @@ const PageLayout = ({ children }) => {
 
   const PageLayoutStyles = styled.div`
     position: relative;
+    max-height: 100vh;
 
     main {
       display: flex;

@@ -10,8 +10,6 @@ import React, {
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
-// Components
-
 // PropTypes
 const propTypes = {
   height: PropTypes.number.isRequired,
@@ -58,14 +56,14 @@ const SquareImage = ({
         bottomLine.classList.add('animate')
       }, 1000)
     }
-  }, [])
+  })
 
   const { theme } = useContext(CurrentThemeContext)
   const ShapeStyles = styled.div`
     position: relative;
     display: inline-block;
     margin: 8px;
-    background-color: ${theme.colors.primaryColor}40;
+    background-color: ${theme.colors.primaryColor}26;
     opacity: 0;
     transition: opacity .5s linear;
 
@@ -83,38 +81,45 @@ const SquareImage = ({
     .bottom-shape {
       width: 0;
       height: 0;
-      max-height: 40%;
       transition: width .2s linear, height .2s .2s linear;
 
       &.animate {
         width: 100%;
-        height: 100%;
+        height: 60%;
       }
     }
 
     .top-line,
     .bottom-line {
       width: 0;
-      max-width: 50%;
+      height: 40%;
       transition: width .2s linear .3s;
 
       &.animate {
-        width: 100%;
+        width: 50%;
       }
     } 
 
     .top-corner,
     .bottom-corner {
       width: 0;
-      max-width: 25%;
       height: 0;
-      max-height: 50%;
       transition: width .2s linear, height .2s linear .1s;
 
       &.animate {
-        width: 100%;
-        height: 100%;
+        width: 25%;
+        height: 75%;
       }
+    }
+
+    .top-shape.animate,
+    .top-corner.animate {
+      box-shadow: inset 5px 5px 5px -5px ${theme.colors.primaryColor};
+    }
+
+    .bottom-shape.animate,
+    .bottom-corner.animate {
+      box-shadow: inset -5px -5px 5px -5px ${theme.colors.primaryColor};
     }
 
     .drop-shape,
@@ -133,7 +138,7 @@ const SquareImage = ({
     .top-shape {
       top: 0;
       right: 0;
-
+      
       &.animate {
         border-top: 2px solid ${theme.colors.primaryColor};
         border-left: 2px solid ${theme.colors.primaryColor};
@@ -142,7 +147,9 @@ const SquareImage = ({
       .top-line {
         top: -10px;
         left: 30%;
-        border-top: 5px solid ${theme.colors.accentColor2};
+        border-top: 4px solid ${theme.colors.accentColor2};
+
+        &.animate { box-shadow: inset 0 5px 5px -5px ${theme.colors.accentColor2}; }
       }
 
       .top-corner {
@@ -150,8 +157,8 @@ const SquareImage = ({
         left: -10px;
         
         &.animate {
-          border-top: 5px solid ${theme.colors.accentColor1};
-          border-left: 5px solid ${theme.colors.accentColor1};
+          border-top: 4px solid ${theme.colors.accentColor1};
+          border-left: 4px solid ${theme.colors.accentColor1};
         }
       }
 
@@ -161,7 +168,7 @@ const SquareImage = ({
         right: 25px;
         width: 0;
         height: 20px;
-
+        
         &::before,
         &::after {
           position: absolute;
@@ -169,20 +176,21 @@ const SquareImage = ({
           height: 0;
           content: '';
         }
-
+        
         &::before {
           left: -7px;
           transform: rotate(-35deg);
         }
-
+        
         &::after {
           right: -7px;
           transform: rotate(35deg);
         }
-
+        
         &.animate {
           width: 30%;
           border-bottom: 2px solid ${theme.colors.primaryColor};
+          box-shadow: inset 0 -5px 5px -5px ${theme.colors.primaryColor};
 
           &::before,
           &::after {
@@ -198,7 +206,7 @@ const SquareImage = ({
     .bottom-shape {
       bottom: 0;
       right: 0;
-
+      
       &.animate {
         border-bottom: 2px solid ${theme.colors.primaryColor};
         border-right: 2px solid ${theme.colors.primaryColor};
@@ -207,7 +215,9 @@ const SquareImage = ({
       .bottom-line {
         bottom: -10px;
         right: 30%;
-        border-bottom: 5px solid ${theme.colors.accentColor2};
+        border-bottom: 4px solid ${theme.colors.accentColor2};
+
+        &.animate { box-shadow: inset 0 -5px 5px -5px ${theme.colors.accentColor2}; }
       }
       
       .bottom-corner {
@@ -215,18 +225,18 @@ const SquareImage = ({
         right: -10px;
 
         &.animate {
-          border-bottom: 5px solid ${theme.colors.accentColor1};
-          border-right: 5px solid ${theme.colors.accentColor1};
+          border-bottom: 4px solid ${theme.colors.accentColor1};
+          border-right: 4px solid ${theme.colors.accentColor1};
         }
       }
 
       .pop-shape {
         position: absolute;
         left: 25px;
-        bottom: 0;
+        bottom: 1px;
         width: 0;
         height: 25px;
-
+        
         &::before,
         &::after {
           position: absolute;
@@ -234,30 +244,31 @@ const SquareImage = ({
           height: 0;
           content: '';
         }
-
+        
         &::before {
-          right: 50%;
-          border-left: 2px solid ${theme.colors.primaryColor};
-          transform: rotate(-35deg);
-        }
-
-        &::after {
           left: -10px;
           border-right: 2px solid ${theme.colors.primaryColor};
           transform: rotate(35deg);
         }
-
+        
+        &::after {
+          right: 50%;
+          border-left: 2px solid ${theme.colors.primaryColor};
+          transform: rotate(-35deg);
+        }
+        
         &.animate {
           width: 75%;
           border-top: 2px solid ${theme.colors.primaryColor};
+          box-shadow: inset 0 5px 5px -5px ${theme.colors.primaryColor};
 
           &::before,
           &::after {
             height: 32px;
           }
 
-          &::before { border-left: 2px solid ${theme.colors.primaryColor}; }
-          &::after { border-right: 2px solid ${theme.colors.primaryColor}; }
+          &::before { border-right: 2px solid ${theme.colors.primaryColor}; }
+          &::after { border-left: 2px solid ${theme.colors.primaryColor}; }
         }
       }
     }
