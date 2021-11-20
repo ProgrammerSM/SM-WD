@@ -12,20 +12,36 @@ import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
 // PropTypes
 const propTypes = {}
-const Button = ({ label }) => {
+const Button = ({
+  isFail,
+  isSubmit,
+  isSuccess,
+  isWarn,
+  label,
+  onClickHandler,
+}) => {
   const buttonRef = useRef()
   useEffect(() => {
     const button = buttonRef.current
 
     if (button) {
+      const leftBracket = button.querySelector('.left-bracket')
+      const rightBracket = button.querySelector('.right-bracket')
+      const leftBar = button.querySelector('.left-bar')
+      const rightBar = button.querySelector('.right-bar')
 
       setTimeout(() => {
+        button.classList.add('animate')
       }, 200)
 
       setTimeout(() => {
+        leftBracket.classList.add('animate')
+        rightBracket.classList.add('animate')
       }, 800)
 
       setTimeout(() => {
+        leftBar.classList.add('animate')
+        rightBar.classList.add('animate')
       }, 1000)
     }
   })
@@ -42,7 +58,7 @@ const Button = ({ label }) => {
     font-family: ${theme.fontFamily.orbitron};
     text-transform: uppercase;
     letter-spacing: 3px;
-    /* opacity: 0; */
+    opacity: 0;
     box-shadow: 0;
     transition: opacity .5s linear, box-shadow .2s linear;
 
@@ -66,20 +82,27 @@ const Button = ({ label }) => {
     .left-bracket,
     .right-bracket {
       top: -2px;
-      width: 15px;
-      height: calc(100% + 4px);
+      width: 0;
+      height: 0;
       border-top: 2px solid ${theme.colors.primaryColor};
       border-bottom: 2px solid ${theme.colors.primaryColor};
+      transition: width .2s .2s linear, height .2s linear;
+
+      &.animate {
+        width: 15px;
+        height: calc(100% + 4px);
+      }
     }
 
     .left-bracket::after,
     .right-bracket::before {
       top: calc(50% + 2.5px);
       transform: translateY(-50%);
-      width: 30px;
+      width: 0;
       height: 5px;
       border-top: 2px solid ${theme.colors.primaryColor};
       box-shadow: inset 0 5px 5px -5px ${theme.colors.primaryColor};
+      transition: width .2s .6s linear;
       content: '';
     }
 
@@ -88,26 +111,35 @@ const Button = ({ label }) => {
       top: 50%;
       transform: translateY(-50%);
       width: 21px;
-      height: 60%;
+      height: 0;
+      transition: height .2s .2s linear;
+
+      &.animate {
+        height: 60%;
+      }
     }
 
     .left-bracket {
       left: -2px;
-      border-left: 2px solid ${theme.colors.primaryColor};
       box-shadow: inset 5px 0 5px -5px ${theme.colors.primaryColor};
 
-      &::after {
-        left: 0;
+      &::after { left: 0; }
+      &.animate {
+        border-left: 2px solid ${theme.colors.primaryColor};
+        
+        &::after { width: 30px; } 
       }
     }
 
     .right-bracket {
       right: -2px;
-      border-right: 2px solid ${theme.colors.primaryColor};
       box-shadow: inset -5px 0 5px -5px ${theme.colors.primaryColor};
 
-      &::before {
-        right: 0;
+      &::before { right: 0; }
+      &.animate {
+        border-right: 2px solid ${theme.colors.primaryColor};
+
+        &::before { width: 30px; }
       }
     }
 
@@ -125,7 +157,16 @@ const Button = ({ label }) => {
   `
 
   return (
-    <SciFiButton ref={buttonRef}>
+    <SciFiButton
+      className={`
+        ${isFail ? 'fail' : ''}
+        ${isSuccess ? 'success' : ''}
+        ${isWarn ? 'warn' : ''}
+      `}
+      ref={buttonRef}
+      type={isSubmit ? 'submit' : 'button'}
+      onClick={onClickHandler}
+    >
       <span className='left-bar' />
       <span className='left-bracket' />
       {label}

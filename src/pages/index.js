@@ -4,20 +4,18 @@ import React from 'react'
 
 // Components
 import Button from 'components/global-components/Button'
-import Container from 'components/global-components/PageWrapper'
-import PageWrapper from 'components/global-components/PageLayout'
+import PageLayout from 'components/global-components/PageLayout'
+import PageWrapper from 'components/global-components/PageWrapper'
 import SquareImage from 'components/global-components/SquareImage'
-import TestComp from 'components/ThemeTransitionExample'
 
 // Markup
 const IndexPage = () => (
-  <PageWrapper>
+  <PageLayout>
     <Helmet>
       <title>Coming Soon</title>
     </Helmet>
 
-    <Container>
-      <TestComp />
+    <PageWrapper>
       <div
         style={{
           alignItems: 'center',
@@ -39,8 +37,8 @@ const IndexPage = () => (
           label='Checking'
         />
       </div>
-    </Container>
-  </PageWrapper>
+    </PageWrapper>
+  </PageLayout>
 )
 
 export default IndexPage

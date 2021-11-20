@@ -28,7 +28,6 @@ const SettingsMenuStyles = styled.div`
 `
 
 const SettingsMenu = () => {
-
   const {
     customTheme,
     themeName,
