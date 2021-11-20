@@ -11,13 +11,21 @@ import React, {
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
 // PropTypes
-const propTypes = {}
+const propTypes = {
+  children: PropTypes.node,
+  isFail: PropTypes.bool,
+  isSubmit: PropTypes.bool,
+  isSuccess: PropTypes.bool,
+  isWarn: PropTypes.bool,
+  onClickHandler: PropTypes.func,
+}
+
 const Button = ({
+  children,
   isFail,
   isSubmit,
   isSuccess,
   isWarn,
-  label,
   onClickHandler,
 }) => {
   const buttonRef = useRef()
@@ -50,6 +58,7 @@ const Button = ({
   const SciFiButton = styled.button`
     position: relative;
     display: block;
+    margin: 2px 10px;
     padding: ${theme.space.small} 3rem;
     background-color: ${theme.colors.primaryColor}26;
     color: ${theme.colors.fontColor};
@@ -57,6 +66,7 @@ const Button = ({
     font-weight: bold;
     font-family: ${theme.fontFamily.orbitron};
     text-transform: uppercase;
+    text-shadow: 0 1px 1px ${theme.colors.fontColor};
     letter-spacing: 3px;
     opacity: 0;
     box-shadow: 0;
@@ -169,7 +179,7 @@ const Button = ({
     >
       <span className='left-bar' />
       <span className='left-bracket' />
-      {label}
+      {children}
       <span className='right-bracket' />
       <span className='right-bar' />
     </SciFiButton>

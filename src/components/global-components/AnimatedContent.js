@@ -6,8 +6,6 @@ import React, {
   useState,
 } from 'react'
 
-// Components
-
 // PropTypes
 const propTypes = {}
 const AnimatedContent = ({

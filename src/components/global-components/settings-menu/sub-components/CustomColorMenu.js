@@ -27,9 +27,7 @@ const CustomColorTheme = ({
     <button
       type='button'
       onClick={resetCustomThemeHandler}
-    >
-      Reset
-    </button>
+    >Reset</button>
     {
       Object.keys(customTheme.colors).map((key, index) => {
         const colorName = key.split('Color').join(' ')
@@ -43,9 +41,7 @@ const CustomColorTheme = ({
               color: customTheme.colors[key],
               colorName: key,
             })}
-          >
-            {formattedColorName}
-          </button>
+          >{formattedColorName}</button>
         )
       })
     }
