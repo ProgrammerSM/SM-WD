@@ -13,7 +13,7 @@ const PageWrapper = ({ children }) => {
   const PageWrapperStyles = styled.div`
     width: 100vw;
     height: 100vh;
-    padding: ${theme.space.medium};
+    padding: 68px ${theme.space.medium};
     background-color: ${theme.colors.backgroundColor};
     color: ${theme.colors.fontColor};
     text-shadow: 0 1px 3px ${theme.colors.fontColor};
