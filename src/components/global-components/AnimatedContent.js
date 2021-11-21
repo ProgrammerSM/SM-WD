@@ -6,8 +6,6 @@ import React, {
   useState,
 } from 'react'
 
-// Components
-
 // PropTypes
 const propTypes = {}
 const AnimatedContent = ({
@@ -43,7 +41,7 @@ const AnimatedContent = ({
 
     if (animate)
       sound && sound.play()
-    
+
     const interval = 1000 / 60
     const printTime = interval * children.length
     const timeout = 500
@@ -94,43 +92,42 @@ const AnimatedContent = ({
   }
 
   useEffect(() => {
-    if (animate) {
-      animateIn();
-    }
+    if (animate)
+      animateIn()
 
-    const animateChanged = animate !== animateRef.current;
-    const showChanged = show !== showRef.current;
-    const childrenChanged = children !== childrenRef.current;
+    const animateChanged = animate !== animateRef.current
+    const showChanged = show !== showRef.current
+    const childrenChanged = children !== childrenRef.current
 
     // Animation changed
-    if (animate) {
-      if (showChanged) {
-        show ? animateIn() : animateOut();
-      }
-      else if (childrenChanged) {
-        animateIn();
-      }
-    }
+    if (animate)
+      if (showChanged)
+        show ? animateIn() : animateOut()
+
+      else if (childrenChanged)
+        animateIn()
 
     // Not animated anymore
-    if (!animate && animateChanged) {
-      stopAnimation();
-    }
-  
+    if (!animate && animateChanged)
+      stopAnimation()
+
     return () => {
       stopAnimation()
     }
-  }, [animate, children, show])
+  }, [
+    animate,
+    children,
+    show,
+  ])
 
-  if (isAnimating) {
+  if (isAnimating)
     return <ElementType>{currentContent}</ElementType>
-  }
 
-  if (!isAnimating && hasAnimated) {
+  if (!isAnimating && hasAnimated)
     return <ElementType>{children}</ElementType>
-  } else {
-    return ""
-  }
+
+  return ''
+
 }
 
 AnimatedContent.propTypes = propTypes

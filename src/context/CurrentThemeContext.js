@@ -1,6 +1,5 @@
 // Modules
 import PropTypes from 'prop-types'
-import { ThemeProvider } from '@emotion/react'
 import React, {
   createContext,
   useRef,
@@ -40,8 +39,8 @@ const CurrentThemeProvider = ({ children }) => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CurrentThemeContext.Provider value={{
+    <CurrentThemeContext.Provider
+      value={{
         customTheme,
         hasCustomTheme,
         previousThemeRef,
@@ -49,11 +48,11 @@ const CurrentThemeProvider = ({ children }) => {
         setHasCustomTheme,
         setThemeName,
         themeName,
+        theme,
       }}
-      >
-        {children}
-      </CurrentThemeContext.Provider>
-    </ThemeProvider>
+    >
+      {children}
+    </CurrentThemeContext.Provider>
   )
 }
 

@@ -18,7 +18,6 @@ module.exports = {
     title: 'Sterling May - Web Developer',
   },
   plugins: [
-    'gatsby-plugin-emotion',
     'gatsby-plugin-image',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-resolve-src',
@@ -90,6 +89,7 @@ module.exports = {
       },
       __key: 'pages',
     },
+    'gatsby-plugin-emotion',
     {
       resolve: 'gatsby-plugin-purgecss', // Purges all unused/unreferenced css rules
       options: { develop: true }, // Activates purging in npm run develop

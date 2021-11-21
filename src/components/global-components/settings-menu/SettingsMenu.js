@@ -1,6 +1,13 @@
+/** @jsx jsx */
+import {
+  css,
+  jsx,
+} from '@emotion/react'
+
 // Modules
-import React, {
+import {
   useContext,
+  useRef,
   useState,
 } from 'react'
 
@@ -24,6 +31,7 @@ const SettingsMenu = () => {
     setCustomTheme,
   } = useContext(CurrentThemeContext)
 
+  const previouslyEnteredValueRef = useRef('#')
   const [selectedCustomColorObject, setSelectedCustomColorObject] = useState({
     color: customTheme.colors.primaryColor,
     colorName: 'primaryColor',
@@ -37,27 +45,39 @@ const SettingsMenu = () => {
   }
 
   const customThemeHandler = (color, colorName) => {
+    const uppercaseColor = color.toUpperCase()
     const updatedCustomThemeObject = {
       colors: {
         ...customTheme.colors,
-        [colorName]: color,
+        [colorName]: uppercaseColor,
       },
     }
 
     setCustomTheme(updatedCustomThemeObject)
+    setSelectedCustomColorObject({
+      ...selectedCustomColorObject,
+      uppercaseColor,
+    })
 
     if (!hasCustomTheme)
       setHasCustomTheme(true)
+
+    document.getElementById('custom-theme-input').value = uppercaseColor
   }
 
   const customColorInputHandler = event => {
-    const enteredColor = event.target.value
-    customThemeHandler(enteredColor, selectedCustomColorObject.colorName)
+    const hexRegEx = /^#[0-9a-f]{0,6}$/i
+    let enteredColor = event.target.value
 
-    setSelectedCustomColorObject({
-      ...selectedCustomColorObject,
-      color: enteredColor,
-    })
+    if (!enteredColor.includes('#'))
+      enteredColor = `#${enteredColor}`
+
+    if (hexRegEx.test(enteredColor))
+      previouslyEnteredValueRef.current = enteredColor
+    else
+      enteredColor = previouslyEnteredValueRef.current
+
+    customThemeHandler(enteredColor, selectedCustomColorObject.colorName)
   }
 
   const resetCustomThemeHandler = () => {
@@ -71,7 +91,13 @@ const SettingsMenu = () => {
   }
 
   return (
-    <div>
+    <div
+      css={css`
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      `}
+    >
       <select
         name='theme-selector'
         value={themeName}
