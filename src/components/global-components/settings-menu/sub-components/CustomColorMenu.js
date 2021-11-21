@@ -11,7 +11,7 @@ const propTypes = {
   customTheme: PropTypes.shape({ colors: PropTypes.objectOf(PropTypes.string).isRequired }).isRequired,
   customThemeHandler: PropTypes.func.isRequired,
   resetCustomThemeHandler: PropTypes.func.isRequired,
-  selectedCustomColorObject: PropTypes.func.isRequired,
+  selectedCustomColorObject: PropTypes.objectOf(PropTypes.any).isRequired,
   setSelectedCustomColorObject: PropTypes.func.isRequired,
 }
 
@@ -27,9 +27,7 @@ const CustomColorTheme = ({
     <button
       type='button'
       onClick={resetCustomThemeHandler}
-    >
-      Reset
-    </button>
+    >Reset</button>
     {
       Object.keys(customTheme.colors).map((key, index) => {
         const colorName = key.split('Color').join(' ')
@@ -43,9 +41,7 @@ const CustomColorTheme = ({
               color: customTheme.colors[key],
               colorName: key,
             })}
-          >
-            {formattedColorName}
-          </button>
+          >{formattedColorName}</button>
         )
       })
     }
@@ -54,8 +50,9 @@ const CustomColorTheme = ({
       onChange={color => customThemeHandler(color, selectedCustomColorObject.colorName)}
     />
     <input
+      id='custom-theme-input'
+      maxLength={7}
       type='text'
-      value={selectedCustomColorObject.color}
       onChange={customColorInputHandler}
     />
   </>

@@ -153,7 +153,7 @@
     "function-call-argument-newline": ["warn", "never"],
     "function-paren-newline": ["warn", "multiline-arguments"],    
     "id-length": ["warn", {
-      "min": 3
+      "min": 2
     }],
     "implicit-arrow-linebreak": "warn",
     "indent": ["warn", 2, {
@@ -340,7 +340,6 @@
     // React Rules - JSX-specific rules
     "react/jsx-boolean-value": ["warn", "never"],
     "react/jsx-closing-bracket-location": "warn",
-    "react/jsx-closing-tag-location": "warn",
     "react/jsx-curly-brace-presence": ["warn", "never"],
     "react/jsx-curly-newline": "warn",
     "react/jsx-curly-spacing": "warn",
