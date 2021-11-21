@@ -5,7 +5,6 @@ import {
 } from '@emotion/react'
 
 // Modules
-import styled from '@emotion/styled'
 import {
   useContext,
   useRef,
@@ -20,12 +19,6 @@ import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
 // Data
 import themeColorGroups from 'data/themeColorGroups'
-
-const SettingsMenuStyles = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`
 
 const SettingsMenu = () => {
   const {
@@ -98,7 +91,7 @@ const SettingsMenu = () => {
   }
 
   return (
-    <SettingsMenuStyles
+    <div
       css={css`
         position: absolute;
         bottom: 0;
@@ -133,7 +126,7 @@ const SettingsMenu = () => {
           setSelectedCustomColorObject={setSelectedCustomColorObject}
         />
       )}
-    </SettingsMenuStyles>
+    </div>
   )
 }
 

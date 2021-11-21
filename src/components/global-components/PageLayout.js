@@ -7,6 +7,7 @@ import styled from '@emotion/styled'
 // Components
 import Footer from './Footer'
 import Header from './Header'
+import NavigationMenu from './navigation-menu/NavigationMenu'
 import SettingsMenu from './settings-menu/SettingsMenu'
 
 // Context
@@ -114,6 +115,7 @@ const PageLayout = ({ children }) => {
           <Header />
           <main>{children}</main>
           <Footer />
+          <NavigationMenu />
           <SettingsMenu />
         </PageLayoutStyles>
       </CurrentThemeProvider>

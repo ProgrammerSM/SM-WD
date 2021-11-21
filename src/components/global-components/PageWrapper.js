@@ -13,15 +13,23 @@ const PageWrapper = ({ children }) => {
   const PageWrapperStyles = styled.div`
     width: 100vw;
     height: 100vh;
+    padding: ${theme.space.medium};
     background-color: ${theme.colors.backgroundColor};
     color: ${theme.colors.fontColor};
     text-shadow: 0 1px 3px ${theme.colors.fontColor};
-    overflow-y: auto;
+
+    /* .page-border {
+      height: 100%;
+      padding: ${theme.space.large};
+      border: 2px solid ${theme.colors.primaryColor};
+    } */
   `
 
   return (
     <PageWrapperStyles>
-      {children}
+      <div className='page-border'>
+        {children}
+      </div>
     </PageWrapperStyles>
   )
 }
