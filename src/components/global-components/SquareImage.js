@@ -62,7 +62,7 @@ const SquareImage = ({
   const ShapeStyles = styled.div`
     position: relative;
     display: inline-block;
-    margin: 8px;
+    margin: calc(1.38rem + 8px) 8px;
     background-color: ${theme.colors.primaryColor}26;
     opacity: 0;
     transition: opacity .5s linear;

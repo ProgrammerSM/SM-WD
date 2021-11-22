@@ -11,6 +11,7 @@ import NavigationMenu from './navigation-menu/NavigationMenu'
 import SettingsMenu from './settings-menu/SettingsMenu'
 
 // Context
+import { BreakpointProvider } from 'context/BreakpointContext'
 import { CurrentThemeProvider } from 'context/CurrentThemeContext'
 
 // Scripts
@@ -111,13 +112,15 @@ const PageLayout = ({ children }) => {
         <meta content='/images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
       </Helmet>
       <CurrentThemeProvider>
-        <PageLayoutStyles>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <NavigationMenu />
-          <SettingsMenu />
-        </PageLayoutStyles>
+        <BreakpointProvider>
+          <PageLayoutStyles>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            {/* <NavigationMenu />
+            <SettingsMenu /> */}
+          </PageLayoutStyles>
+        </BreakpointProvider>
       </CurrentThemeProvider>
     </>
   )
