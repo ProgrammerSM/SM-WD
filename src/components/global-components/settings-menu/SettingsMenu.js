@@ -1,132 +1,35 @@
-/** @jsx jsx */
-import {
-  css,
-  jsx,
-} from '@emotion/react'
-
 // Modules
-import {
-  useContext,
-  useRef,
-  useState,
-} from 'react'
+import { css } from '@emotion/react'
+import { faCogs } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
 
-// Components
-import CustomColorMenu from './sub-components/CustomColorMenu'
-
-// Context
-import { CurrentThemeContext } from 'context/CurrentThemeContext'
-
-// Data
-import themeColorGroups from 'data/themeColorGroups'
+// Component
+import MenuButton from '../MenuButton'
 
 const SettingsMenu = () => {
-  const {
-    customTheme,
-    themeName,
-    hasCustomTheme,
-    previousThemeRef,
-    setHasCustomTheme,
-    setThemeName,
-    setCustomTheme,
-  } = useContext(CurrentThemeContext)
 
-  const previouslyEnteredValueRef = useRef('#')
-  const [selectedCustomColorObject, setSelectedCustomColorObject] = useState({
-    color: customTheme.colors.primaryColor,
-    colorName: 'primaryColor',
-  })
+  const settingsMenuButtonStyles = css`
+    position: absolute;
+    right: 10px;
+    bottom: 60px;
 
-  const themeChangeHandler = event => {
-    setThemeName(event.target.value)
-
-    if (event.target.value === 'custom' && !hasCustomTheme)
-      setCustomTheme({ ...themeColorGroups[themeName] })
-  }
-
-  const customThemeHandler = (color, colorName) => {
-    const uppercaseColor = color.toUpperCase()
-    const updatedCustomThemeObject = {
-      colors: {
-        ...customTheme.colors,
-        [colorName]: uppercaseColor,
-      },
+    @media screen and (min-width: 430px) {
+      right: 10px;
+      bottom: 25px;
     }
 
-    setCustomTheme(updatedCustomThemeObject)
-    setSelectedCustomColorObject({
-      ...selectedCustomColorObject,
-      uppercaseColor,
-    })
-
-    if (!hasCustomTheme)
-      setHasCustomTheme(true)
-
-    document.getElementById('custom-theme-input').value = uppercaseColor
-  }
-
-  const customColorInputHandler = event => {
-    const hexRegEx = /^#[0-9a-f]{0,6}$/i
-    let enteredColor = event.target.value
-
-    if (!enteredColor.includes('#'))
-      enteredColor = `#${enteredColor}`
-
-    if (hexRegEx.test(enteredColor))
-      previouslyEnteredValueRef.current = enteredColor
-    else
-      enteredColor = previouslyEnteredValueRef.current
-
-    customThemeHandler(enteredColor, selectedCustomColorObject.colorName)
-  }
-
-  const resetCustomThemeHandler = () => {
-    const previousTheme = previousThemeRef.current
-
-    setCustomTheme(previousTheme)
-    setSelectedCustomColorObject({
-      ...selectedCustomColorObject,
-      color: previousTheme.colors[selectedCustomColorObject.colorName],
-    })
-  }
+    @media screen and (min-width: 470px) {
+      right: 25px;
+    }
+  `
 
   return (
-    <div
-      css={css`
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      `}
-    >
-      <select
-        name='theme-selector'
-        value={themeName}
-        onChange={themeChangeHandler}
-      >
-        {
-          Object.keys(themeColorGroups).map(key => (
-            <option
-              key={`theme-option-${key}`}
-              value={key}
-            >
-              {key.toUpperCase()}
-            </option>
-          ))
-        }
-
-        <option value='custom'>CUSTOM</option>
-      </select>
-      {themeName === 'custom' && (
-        <CustomColorMenu
-          customColorInputHandler={customColorInputHandler}
-          customTheme={customTheme}
-          customThemeHandler={customThemeHandler}
-          resetCustomThemeHandler={resetCustomThemeHandler}
-          selectedCustomColorObject={selectedCustomColorObject}
-          setSelectedCustomColorObject={setSelectedCustomColorObject}
-        />
-      )}
-    </div>
+    <MenuButton
+      buttonText='settings'
+      customStyles={settingsMenuButtonStyles}
+      icon={faCogs}
+      tabIndexNumber={3}
+    />
   )
 }
 

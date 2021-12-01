@@ -6,6 +6,9 @@ import React, { useContext } from 'react'
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
+// Data
+import { mediumUp } from 'data/media-queries'
+
 // PropTypes
 const propTypes = { children: PropTypes.node }
 const PageWrapper = ({ children }) => {
@@ -21,7 +24,10 @@ const PageWrapper = ({ children }) => {
     .page-border-box {
       position: relative;
       height: 100%;
-      padding: ${theme.space.small};
+      padding: ${theme.space.medium} ${theme.space.small} 80px;
+
+      @media screen and (min-width: 430px) { padding-bottom: 50px; }
+      ${mediumUp} { padding: 65px; }
 
       .left-border,
       .right-border {

@@ -58,7 +58,7 @@ const Footer = () => {
       &::before,
       &::after {
         position: absolute;
-        top: -8px;
+        top: -7px;
         height: 66px;
         content: '';
       }

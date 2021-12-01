@@ -117,8 +117,8 @@ const PageLayout = ({ children }) => {
             <Header />
             <main>{children}</main>
             <Footer />
-            {/* <NavigationMenu />
-            <SettingsMenu /> */}
+            <NavigationMenu />
+            <SettingsMenu />
           </PageLayoutStyles>
         </BreakpointProvider>
       </CurrentThemeProvider>

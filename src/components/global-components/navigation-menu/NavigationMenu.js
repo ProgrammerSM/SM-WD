@@ -1,27 +1,34 @@
-/** @jsx jsx */
-import {
-  css,
-  jsx,
-} from '@emotion/react'
-
 // Modules
-import { useContext } from 'react'
+import { css } from '@emotion/react'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
 
-// Context
-import { CurrentThemeContext } from 'context/CurrentThemeContext'
+// Component
+import MenuButton from '../MenuButton'
 
 const NavigationMenu = () => {
-  const { theme } = useContext(CurrentThemeContext)
+  const navigationMenuButtonStyles = css`
+    position: absolute;
+    left: 10px;
+    bottom: 60px;
+
+    @media screen and (min-width: 430px) {
+      left: 10px;
+      bottom: 25px;
+    }
+
+    @media screen and (min-width: 470px) {
+      left: 25px;
+    }
+  `
 
   return (
-    <div
-      css={css`
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      color: ${theme.colors.fontColor};
-    `}
-    >NavigationMenu</div>
+    <MenuButton
+      buttonText='menu'
+      customStyles={navigationMenuButtonStyles}
+      icon={faBars}
+      tabIndexNumber={2}
+    />
   )
 }
 

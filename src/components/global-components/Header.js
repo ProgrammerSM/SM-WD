@@ -99,7 +99,10 @@ const Header = () => {
     <HeaderStyles>
       <div className='header-border' />
       <div className='logo-shape'>
-        <Link to='/'>
+        <Link
+          tabIndex={1}
+          to='/'
+        >
           <div className='logo-wrapper'>
             <span>Sterling May</span>
             <Logo
