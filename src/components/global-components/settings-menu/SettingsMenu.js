@@ -14,12 +14,11 @@ const SettingsMenu = () => {
     bottom: 60px;
 
     @media screen and (min-width: 430px) {
-      right: 10px;
       bottom: 25px;
     }
 
     @media screen and (min-width: 470px) {
-      right: 25px;
+      right: 15px;
     }
   `
 

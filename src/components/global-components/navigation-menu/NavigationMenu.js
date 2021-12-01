@@ -13,12 +13,11 @@ const NavigationMenu = () => {
     bottom: 60px;
 
     @media screen and (min-width: 430px) {
-      left: 10px;
       bottom: 25px;
     }
 
     @media screen and (min-width: 470px) {
-      left: 25px;
+      left: 15px;
     }
   `
 
