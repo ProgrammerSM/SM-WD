@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import React, { useContext } from 'react'
 
+// Components
+import BackgroundSVG from './BackgroundSVG'
+
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
@@ -88,9 +91,12 @@ const PageWrapper = ({ children }) => {
     }
 
     .overflow {
+      position: relative;
       height: 100%;
       padding: 0 ${theme.space.extraSmall};
+      background-color: ${theme.colors.backgroundColor}80;
       overflow: hidden auto;
+      z-index: 1;
 
       &::-webkit-scrollbar {
         width: 5px;
@@ -107,8 +113,9 @@ const PageWrapper = ({ children }) => {
       <div className='page-border-box'>
         <div className='left-border' />
         <div className='overflow'>
-          {children}
+          {/* {children} */}
         </div>
+        <BackgroundSVG />
         <div className='right-border' />
       </div>
     </PageWrapperStyles>

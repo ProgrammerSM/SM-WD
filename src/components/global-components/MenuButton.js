@@ -46,7 +46,7 @@ const MenuButton = ({
 
     &:focus .animated-circle,
     &:hover .animated-circle {
-      animation: rotating 5s linear infinite;
+      animation-duration: 10s;
     }
 
     .main-button {
@@ -96,11 +96,12 @@ const MenuButton = ({
       stroke-dasharray: 50%, 25%;
       transform: rotate(15deg);
       transform-origin: center center;
+      animation: rotating 200s linear infinite;
     }
 
     @keyframes rotating {
       from { transform: rotate(0deg); }
-      to { transform: rotate(365deg); }
+      to { transform: rotate(1800deg); }
     }
   `
 
