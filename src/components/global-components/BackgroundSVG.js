@@ -84,11 +84,13 @@ const BackgroundSVG = () => {
     .circle2 {
       stroke-dasharray: 10%, 1%;
       transform: rotate(2deg);
+      animation: continuousRotation 200s linear alternate infinite;
     }
 
     .circle3 {
       stroke-width: 1.5%;
       stroke-dasharray: 1%;
+      animation: opacityFlux 30s linear alternate infinite;
 
       ${mediumUp} { stroke-dasharray: .3%; }
     }
@@ -99,16 +101,19 @@ const BackgroundSVG = () => {
 
     .circle6 {
       stroke: ${theme.colors.primaryColor};
+      animation: alternatingRataion 30s linear alternate-reverse infinite;
     }
 
     .circle8 {
       stroke: ${theme.colors.accentColor2};
       stroke-dasharray: 21%;
+      animation: continuousRotation 200s linear alternate-reverse infinite;
     }
     
     .circle9 {
       stroke-width: 5%;
       stroke-dasharray: .8%;
+      animation: opacityFlux 30s 2s linear alternate-reverse infinite;
 
       ${mediumUp} { stroke-dasharray: .48%; }
     }
@@ -118,7 +123,9 @@ const BackgroundSVG = () => {
     }
 
     .circle11 {
+      stroke: ${theme.colors.accentColor3};
       stroke-dasharray: 8% 82%;
+      animation: alternatingRataion 200s linear alternate infinite;
     }
 
     .circle12 {
@@ -130,6 +137,42 @@ const BackgroundSVG = () => {
       stroke-width: 2%;
       stroke-dasharray: 15% 96%;
       transform: rotate(-13deg);
+      animation: alternatingRataion 100s linear alternate-reverse infinite;
+    }
+
+    @keyframes continuousRotation {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(1800deg); }
+    }
+
+    @keyframes alternatingRataion {
+      0% { transform: rotate(0deg); }
+      10% { transform: rotate(-90deg); }
+      20% { transform: rotate(45deg); }
+      30% { transform: rotate(-180deg); }
+      40% { transform: rotate(45deg); }
+      50% { transform: rotate(-20deg); }
+      60% { transform: rotate(180deg); }
+      70% { transform: rotate(-90deg); }
+      80% { transform: rotate(220deg); }
+      90% { transform: rotate(-360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes opacityFlux {
+      0% { stroke: ${theme.colors.primaryColor}40; }
+      10% { stroke: ${theme.colors.primaryColor}80; }
+      20% { stroke: ${theme.colors.primaryColor}40; }
+      30% { stroke: ${theme.colors.primaryColor}BF; }
+      40% { stroke: ${theme.colors.primaryColor}40; }
+      50% { stroke: ${theme.colors.primaryColor}66; }
+      60% { stroke: ${theme.colors.primaryColor}40; }
+      70% { stroke: ${theme.colors.primaryColor}; }
+      71% { stroke: ${theme.colors.primaryColor}4D; }
+      72% { stroke: ${theme.colors.primaryColor}; }
+      80% { stroke: ${theme.colors.primaryColor}40; }
+      90% { stroke: ${theme.colors.primaryColor}; }
+      100% { stroke: ${theme.colors.primaryColor}40; }
     }
   `
 
