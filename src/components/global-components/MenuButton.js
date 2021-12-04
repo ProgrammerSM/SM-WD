@@ -1,5 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
+import {
+  faLock,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons'
 
 // Modules
 import PropTypes from 'prop-types'
@@ -21,6 +25,8 @@ const propTypes = {
   clickHandler: PropTypes.func,
   customStyles: PropTypes.string,
   icon: PropTypes.objectOf(PropTypes.string),
+  isActive: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   tabIndexNumber: PropTypes.number,
 }
 
@@ -29,9 +35,27 @@ const MenuButton = ({
   clickHandler,
   customStyles,
   icon,
+  isActive,
+  isDisabled,
   tabIndexNumber,
 }) => {
+
   const { theme } = useContext(CurrentThemeContext)
+  let buttonColor = `${theme.colors.primaryColor}80`
+  let buttonFontColor = theme.colors.fontColor
+  let buttonIcon = icon
+
+  if (isActive) {
+    buttonColor = `${theme.colors.primaryColor}BF`
+    buttonIcon = faTimes
+  }
+
+  if (isDisabled) {
+    buttonColor = `${theme.colors.primaryColor}40`
+    buttonFontColor = `${theme.colors.fontColor}80`
+    buttonIcon = faLock
+  }
+
   const MenuButtonStyles = styled.div`
     width: calc(2.5rem + 10px);
     height: calc(2.5rem + 10px);
@@ -44,9 +68,18 @@ const MenuButton = ({
       height: calc(4rem + 10px);
     }
 
-    &:focus .animated-circle,
-    &:hover .animated-circle {
+    &:focus:not([disabled]) .animated-circle,
+    &:hover:not([disabled]) .animated-circle,
+    &[data-active = true] .animated-circle {
       animation-duration: 10s;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      
+      .animated-circle {
+        animation-play-state: paused;
+      }
     }
 
     .main-button {
@@ -61,8 +94,9 @@ const MenuButton = ({
       width: 2.5rem;
       height: 2.5rem;
       padding: ${theme.space.extraSmall};
-      background-image: radial-gradient(circle, ${theme.colors.primaryColor}80, transparent);
-      color: ${theme.colors.fontColor};
+      background-image: radial-gradient(circle, ${buttonColor}, transparent);
+      color: ${buttonFontColor};
+      ${isActive && `font-weight: bold;`}
       border-radius: 50%;
       border: 1px solid ${theme.colors.primaryColor};
       transition: all .2s linear;
@@ -115,6 +149,8 @@ const MenuButton = ({
   return (
     <MenuButtonStyles
       css={customStyles}
+      data-active={Boolean(isActive)}
+      disabled={Boolean(isDisabled)}
       role='button'
       tabIndex={tabIndexNumber}
       onClick={clickHandler}
@@ -122,7 +158,7 @@ const MenuButton = ({
     >
       <div className='main-button'>
         {icon && (
-          <FontAwesomeIcon icon={icon} />
+          <FontAwesomeIcon icon={buttonIcon} />
         )}
         {buttonText && <span className='button-text'>{buttonText}</span>}
       </div>
