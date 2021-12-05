@@ -1,7 +1,10 @@
 // Modules
-import { HexColorPicker } from 'react-colorful'
 import PropTypes from 'prop-types'
 import React from 'react'
+import {
+  HexColorInput,
+  HexColorPicker,
+} from 'react-colorful'
 
 // Components
 
@@ -49,11 +52,9 @@ const CustomColorTheme = ({
       color={selectedCustomColorObject.color}
       onChange={color => customThemeHandler(color, selectedCustomColorObject.colorName)}
     />
-    <input
-      id='custom-theme-input'
-      maxLength={7}
-      type='text'
-      onChange={customColorInputHandler}
+    <HexColorInput
+      color={selectedCustomColorObject.color}
+      onChange={color => customThemeHandler(color, selectedCustomColorObject.colorName)}
     />
   </>
 )

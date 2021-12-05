@@ -1,9 +1,6 @@
 /** @jsx jsx */
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { jsx } from '@emotion/react'
-import {
-  faLock,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons'
 
 // Modules
 import PropTypes from 'prop-types'
@@ -15,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
+import { SettingsContext } from 'context/SettingsContext'
 
 // Data
 import { mediumUp } from 'data/media-queries'
@@ -39,7 +37,7 @@ const MenuButton = ({
   isDisabled,
   tabIndexNumber,
 }) => {
-
+  const { isAnimationActive } = useContext(SettingsContext)
   const { theme } = useContext(CurrentThemeContext)
   let buttonColor = `${theme.colors.primaryColor}80`
   let buttonFontColor = theme.colors.fontColor
@@ -53,7 +51,6 @@ const MenuButton = ({
   if (isDisabled) {
     buttonColor = `${theme.colors.primaryColor}40`
     buttonFontColor = `${theme.colors.fontColor}80`
-    buttonIcon = faLock
   }
 
   const MenuButtonStyles = styled.div`
@@ -61,7 +58,7 @@ const MenuButton = ({
     height: calc(2.5rem + 10px);
     border-radius: 50%;
     cursor: pointer;
-    transition: all .2s linear;
+    ${isAnimationActive && 'transition: all .2s linear;'}
 
     ${mediumUp} {
       width: calc(4rem + 10px);
@@ -74,12 +71,8 @@ const MenuButton = ({
       animation-duration: 10s;
     }
 
-    &[disabled] {
-      cursor: not-allowed;
-      
-      .animated-circle {
-        animation-play-state: paused;
-      }
+    &[disabled] .animated-circle {
+      animation-play-state: paused;
     }
 
     .main-button {
@@ -130,7 +123,7 @@ const MenuButton = ({
       stroke-dasharray: 50%, 25%;
       transform: rotate(15deg);
       transform-origin: center center;
-      animation: rotating 200s linear infinite;
+      ${isAnimationActive && 'animation: rotating 200s linear infinite;'}
     }
 
     @keyframes rotating {

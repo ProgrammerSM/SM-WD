@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 
 // Components
-import CustomColorMenu from './sub-components/CustomColorMenu'
+import CustomColorMenu from './CustomColorMenu'
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
@@ -55,8 +55,6 @@ const ColorThemeSelector = () => {
 
     if (!hasCustomTheme)
       setHasCustomTheme(true)
-
-    document.getElementById('custom-theme-input').value = uppercaseColor
   }
 
   const customColorInputHandler = event => {

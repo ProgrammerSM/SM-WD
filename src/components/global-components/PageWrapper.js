@@ -5,8 +5,11 @@ import React, { useContext } from 'react'
 
 // Components
 import BackgroundSVG from './BackgroundSVG'
+import NavigationMenu from './navigation/NavigationMenu'
+import SettingsMenu from './settings/settings-menu/SettingsMenu'
 
 // Context
+import { ActiveMenuContext } from 'context/ActiveMenuContext'
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
 
 // Data
@@ -15,6 +18,11 @@ import { mediumUp } from 'data/media-queries'
 // PropTypes
 const propTypes = { children: PropTypes.node }
 const PageWrapper = ({ children }) => {
+  const {
+    activeMenu,
+    isMenuActive,
+  } = useContext(ActiveMenuContext)
+
   const { theme } = useContext(CurrentThemeContext)
   const PageWrapperStyles = styled.div`
     width: 100vw;
@@ -113,9 +121,11 @@ const PageWrapper = ({ children }) => {
       <div className='page-border-box'>
         <div className='left-border' />
         <div className='overflow'>
-          {/* {children} */}
+          {activeMenu === 'menu' && <NavigationMenu />}
+          {activeMenu === 'settings' && <SettingsMenu />}
+          {!isMenuActive && children}
         </div>
-        <BackgroundSVG />
+        {!isMenuActive && <BackgroundSVG />}
         <div className='right-border' />
       </div>
     </PageWrapperStyles>

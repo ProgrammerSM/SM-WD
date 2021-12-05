@@ -47,8 +47,8 @@ const CurrentThemeProvider = ({ children }) => {
         setCustomTheme,
         setHasCustomTheme,
         setThemeName,
-        themeName,
         theme,
+        themeName,
       }}
     >
       {children}

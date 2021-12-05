@@ -9,6 +9,7 @@ import React, {
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
+import { SettingsContext } from 'context/SettingsContext'
 
 // PropTypes
 const propTypes = {
@@ -29,6 +30,7 @@ const Button = ({
   onClickHandler,
 }) => {
   const buttonRef = useRef()
+  const { isAnimationActive } = useContext(SettingsContext)
   useEffect(() => {
     const button = buttonRef.current
 
@@ -38,19 +40,28 @@ const Button = ({
       const leftBar = button.querySelector('.left-bar')
       const rightBar = button.querySelector('.right-bar')
 
-      setTimeout(() => {
-        button.classList.add('animate')
-      }, 200)
+      if (isAnimationActive) {
+        setTimeout(() => {
+          button.classList.add('animate')
+        }, 200)
 
-      setTimeout(() => {
+        setTimeout(() => {
+          leftBracket.classList.add('animate')
+          rightBracket.classList.add('animate')
+        }, 800)
+
+        setTimeout(() => {
+          leftBar.classList.add('animate')
+          rightBar.classList.add('animate')
+        }, 1000)
+      } else {
+        button.classList.add('animate')
         leftBracket.classList.add('animate')
         rightBracket.classList.add('animate')
-      }, 800)
-
-      setTimeout(() => {
         leftBar.classList.add('animate')
         rightBar.classList.add('animate')
-      }, 1000)
+      }
+
     }
   })
 
@@ -70,7 +81,7 @@ const Button = ({
     letter-spacing: 3px;
     opacity: 0;
     box-shadow: 0;
-    transition: opacity .5s linear, box-shadow .2s linear;
+    ${isAnimationActive && 'transition: opacity .5s linear, box-shadow .2s linear;'}
 
     &:active,
     &:focus,
@@ -96,7 +107,7 @@ const Button = ({
       height: 0;
       border-top: 2px solid ${theme.colors.primaryColor};
       border-bottom: 2px solid ${theme.colors.primaryColor};
-      transition: width .2s .2s linear, height .2s linear;
+      ${isAnimationActive && 'transition: width .2s .2s linear, height .2s linear;'}
 
       &.animate {
         width: 15px;
@@ -112,7 +123,7 @@ const Button = ({
       height: 5px;
       border-top: 2px solid ${theme.colors.primaryColor};
       box-shadow: inset 0 5px 5px -5px ${theme.colors.primaryColor};
-      transition: width .2s .6s linear;
+      ${isAnimationActive && 'transition: width .2s .6s linear;'}
       content: '';
     }
 
@@ -122,7 +133,7 @@ const Button = ({
       transform: translateY(-50%);
       width: 21px;
       height: 0;
-      transition: height .2s .2s linear;
+      ${isAnimationActive && 'transition: height .2s .2s linear;'}
 
       &.animate {
         height: 60%;

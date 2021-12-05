@@ -4,11 +4,13 @@ import React, { useContext } from 'react'
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
+import { SettingsContext } from 'context/SettingsContext'
 
 // Data
 import { mediumUp } from 'data/media-queries'
 
 const BackgroundSVG = () => {
+  const { isAnimationActive } = useContext(SettingsContext)
   const { theme } = useContext(CurrentThemeContext)
   const BackgroundSVGStyles = styled.svg`
     position: absolute;
@@ -18,6 +20,7 @@ const BackgroundSVG = () => {
     width: 80vw;
     height: 80vw;
     z-index: 0;
+    ${isAnimationActive && 'animation: loadSvg 5s;'}
 
     ${mediumUp} {
       max-width: 675px;
@@ -84,13 +87,13 @@ const BackgroundSVG = () => {
     .circle2 {
       stroke-dasharray: 10%, 1%;
       transform: rotate(2deg);
-      animation: continuousRotation 200s linear alternate infinite;
+      ${isAnimationActive && 'animation: continuousRotation 200s linear alternate infinite;'}
     }
 
     .circle3 {
       stroke-width: 1.5%;
       stroke-dasharray: 1%;
-      animation: opacityFlux 30s linear alternate infinite;
+      ${isAnimationActive && 'animation: opacityFlux 30s linear alternate infinite;'}
 
       ${mediumUp} { stroke-dasharray: .3%; }
     }
@@ -101,19 +104,19 @@ const BackgroundSVG = () => {
 
     .circle6 {
       stroke: ${theme.colors.primaryColor};
-      animation: alternatingRataion 30s linear alternate-reverse infinite;
+      ${isAnimationActive && 'animation: alternatingRataion 30s linear alternate-reverse infinite;'}
     }
 
     .circle8 {
       stroke: ${theme.colors.accentColor2};
       stroke-dasharray: 21%;
-      animation: continuousRotation 200s linear alternate-reverse infinite;
+      ${isAnimationActive && 'animation: continuousRotation 200s linear alternate-reverse infinite;'}
     }
     
     .circle9 {
       stroke-width: 5%;
       stroke-dasharray: .8%;
-      animation: opacityFlux 30s 2s linear alternate-reverse infinite;
+      ${isAnimationActive && 'animation: opacityFlux 30s 2s linear alternate-reverse infinite;'}
 
       ${mediumUp} { stroke-dasharray: .48%; }
     }
@@ -125,7 +128,7 @@ const BackgroundSVG = () => {
     .circle11 {
       stroke: ${theme.colors.accentColor3};
       stroke-dasharray: 8% 82%;
-      animation: alternatingRataion 200s linear alternate infinite;
+      ${isAnimationActive && 'animation: alternatingRataion 200s linear alternate infinite;'}
     }
 
     .circle12 {
@@ -137,7 +140,12 @@ const BackgroundSVG = () => {
       stroke-width: 2%;
       stroke-dasharray: 15% 96%;
       transform: rotate(-13deg);
-      animation: alternatingRataion 100s linear alternate-reverse infinite;
+      ${isAnimationActive && 'animation: alternatingRataion 100s linear alternate-reverse infinite;'}
+    }
+
+    @keyframes loadSvg {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @keyframes continuousRotation {

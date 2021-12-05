@@ -9,6 +9,7 @@ import React, {
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
+import { SettingsContext } from 'context/SettingsContext'
 
 // Components
 import AnimatedContent from './AnimatedContent'
@@ -28,19 +29,26 @@ const Heading = ({
   isRight,
 }) => {
   const headingRef = useRef()
+  const { isAnimationActive } = useContext(SettingsContext)
   useEffect(() => {
     const heading = headingRef.current
 
     if (heading) {
       const bottomBorder = heading.querySelector('.bottom-border')
 
-      setTimeout(() => {
-        heading.classList.add('animate')
-      }, 200)
+      if (isAnimationActive) {
+        setTimeout(() => {
+          heading.classList.add('animate')
+        }, 200)
 
-      setTimeout(() => {
+        setTimeout(() => {
+          bottomBorder.classList.add('animate')
+        }, 800)
+      } else {
+        heading.classList.add('animate')
         bottomBorder.classList.add('animate')
-      }, 800)
+      }
+
     }
   })
 
@@ -50,7 +58,7 @@ const Heading = ({
     margin-bottom: calc(1.38rem + 10px);
     text-align: left;
     opacity: 0;
-    transition: opacity .5s linear;
+    ${isAnimationActive && 'transition: opacity .5s linear;'}
 
     &.animate { opacity: 1; }
     &.center {
@@ -59,12 +67,12 @@ const Heading = ({
       .bottom-border {
         left: 50%;
         right: 50%;
-        transition: all .4s linear;
+        ${isAnimationActive && 'transition: all .4s linear;'}
 
         &::after {
           left: 50%;
           right: 50%;
-          transition: all .6s .2s linear;
+          ${isAnimationActive && 'transition: all .6s .2s linear;'}
         }
 
         &.animate {
@@ -85,11 +93,11 @@ const Heading = ({
       .bottom-border {
         left: 100%;
         right: 0;
-        transition: all .4s linear;
+        ${isAnimationActive && 'transition: all .4s linear;'}
         
         &::after {
           right: 0;
-          transition: all .6s .2s linear;
+          ${isAnimationActive && 'transition: all .6s .2s linear;'}
         }
 
         &.animate {
@@ -106,7 +114,7 @@ const Heading = ({
       height: 100%;
       border-bottom: 2px solid ${theme.colors.primaryColor};
       box-shadow: inset 0 -5px 5px -5px ${theme.colors.primaryColor};
-      transition: width .4s linear;
+      ${isAnimationActive && 'transition: width .4s linear;'}
 
       &::after {
         position: absolute;
@@ -115,7 +123,7 @@ const Heading = ({
         height: 10px;
         border-bottom: 4px solid ${theme.colors.accentColor1};
         box-shadow: inset 0 -5px 5px -5px ${theme.colors.accentColor1};
-        transition: width .6s .2s linear;
+        ${isAnimationActive && 'transition: width .6s .2s linear;'}
         content: '';
       }
 
@@ -137,10 +145,14 @@ const Heading = ({
       `}
       ref={headingRef}
     >
-      <AnimatedContent
-        animate
-        as={Element}
-      >{children}</AnimatedContent>
+      {
+        isAnimationActive ? (
+          <AnimatedContent
+            animate
+            as={Element}
+          >{children}</AnimatedContent>
+        ) : <Element>{children}</Element>
+      }
       <div className='bottom-border' />
     </HeadingStyles>
   )

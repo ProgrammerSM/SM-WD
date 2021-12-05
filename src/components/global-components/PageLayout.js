@@ -6,13 +6,10 @@ import styled from '@emotion/styled'
 
 // Components
 import Footer from './Footer'
+import GlobalContext from 'context/GlobalContext'
 import Header from './Header'
-import NavigationMenu from './navigation-menu/NavigationMenu'
-import SettingsMenu from './settings-menu/SettingsMenu'
-
-// Context
-import { BreakpointProvider } from 'context/BreakpointContext'
-import { CurrentThemeProvider } from 'context/CurrentThemeContext'
+import NavigationMenu from './navigation/NavigationMenuButton'
+import SettingsMenu from './settings/SettingsButton'
 
 // Scripts
 import useSiteMetadata from 'scripts/useSiteMetadata'
@@ -25,6 +22,8 @@ import 'styles/global-styles.scss'
 // PropTypes
 const propTypes = { children: PropTypes.node }
 const PageLayout = ({ children }) => {
+  const navigationMenuButtonName = 'menu'
+  const settingsMenuButtonName = 'settings'
   const {
     author,
     description,
@@ -111,17 +110,21 @@ const PageLayout = ({ children }) => {
         <meta content='/images/mstile-icons/mstile-310x150.png' name='msapplication-TileImage' sizes='310x150' />
         <meta content='/images/mstile-icons/mstile-310x310.png' name='msapplication-TileImage' sizes='310x310' />
       </Helmet>
-      <CurrentThemeProvider>
-        <BreakpointProvider>
-          <PageLayoutStyles>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <NavigationMenu />
-            <SettingsMenu />
-          </PageLayoutStyles>
-        </BreakpointProvider>
-      </CurrentThemeProvider>
+      <GlobalContext>
+        <PageLayoutStyles>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <NavigationMenu
+            alternateButtonName={settingsMenuButtonName}
+            buttonName={navigationMenuButtonName}
+          />
+          <SettingsMenu
+            alternateButtonName={navigationMenuButtonName}
+            buttonName={settingsMenuButtonName}
+          />
+        </PageLayoutStyles>
+      </GlobalContext>
     </>
   )
   /* eslint-enable react/jsx-max-props-per-line -- easier to read the meta data on one line each */

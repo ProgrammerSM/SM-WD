@@ -9,6 +9,7 @@ import React, {
 
 // Context
 import { CurrentThemeContext } from 'context/CurrentThemeContext'
+import { SettingsContext } from 'context/SettingsContext'
 
 // PropTypes
 const propTypes = {
@@ -25,6 +26,7 @@ const SquareImage = ({
   width,
 }) => {
   const imageContainerRef = useRef()
+  const { isAnimationActive } = useContext(SettingsContext)
   useEffect(() => {
     const imageContainter = imageContainerRef.current
 
@@ -38,23 +40,35 @@ const SquareImage = ({
       const dropShape = imageContainter.querySelector('.drop-shape')
       const popShape = imageContainter.querySelector('.pop-shape')
 
-      setTimeout(() => {
-        imageContainter.classList.add('animate')
-      }, 200)
+      if (isAnimationActive) {
+        setTimeout(() => {
+          imageContainter.classList.add('animate')
+        }, 200)
 
-      setTimeout(() => {
+        setTimeout(() => {
+          topShape.classList.add('animate')
+          bottomShape.classList.add('animate')
+        }, 800)
+
+        setTimeout(() => {
+          dropShape.classList.add('animate')
+          popShape.classList.add('animate')
+          topCorner.classList.add('animate')
+          bottomCorner.classList.add('animate')
+          topLine.classList.add('animate')
+          bottomLine.classList.add('animate')
+        }, 1000)
+      } else {
+        imageContainter.classList.add('animate')
         topShape.classList.add('animate')
         bottomShape.classList.add('animate')
-      }, 800)
-
-      setTimeout(() => {
         dropShape.classList.add('animate')
         popShape.classList.add('animate')
         topCorner.classList.add('animate')
         bottomCorner.classList.add('animate')
         topLine.classList.add('animate')
         bottomLine.classList.add('animate')
-      }, 1000)
+      }
     }
   })
 
@@ -65,7 +79,7 @@ const SquareImage = ({
     margin: calc(1.38rem + 8px) 8px;
     background-color: ${theme.colors.primaryColor}26;
     opacity: 0;
-    transition: opacity .5s linear;
+    ${isAnimationActive && 'transition: opacity .5s linear;'}
 
     &.animate { opacity: 1; }
     .top-shape,
@@ -81,7 +95,7 @@ const SquareImage = ({
     .bottom-shape {
       width: 0;
       height: 0;
-      transition: width .2s linear, height .2s .2s linear;
+      ${isAnimationActive && 'transition: width .2s linear, height .2s .2s linear;'}
 
       &.animate {
         width: 100%;
@@ -93,7 +107,7 @@ const SquareImage = ({
     .bottom-line {
       width: 0;
       height: 40%;
-      transition: width .2s linear .3s;
+      ${isAnimationActive && 'transition: width .2s linear .3s;'}
 
       &.animate {
         width: 50%;
@@ -104,7 +118,7 @@ const SquareImage = ({
     .bottom-corner {
       width: 0;
       height: 0;
-      transition: width .2s linear, height .2s linear .1s;
+      ${isAnimationActive && 'transition: width .2s linear, height .2s linear .1s;'}
 
       &.animate {
         width: 25%;
@@ -124,14 +138,14 @@ const SquareImage = ({
 
     .drop-shape,
     .pop-shape {
-      transition: width .2s linear;
+      ${isAnimationActive && 'transition: width .2s linear;'}
 
       &::before {
-        transition: height .2s linear;
+        ${isAnimationActive && 'transition: height .2s linear;'}
       }
       
       &::after {
-        transition: height .2s linear .2s;
+        ${isAnimationActive && 'transition: height .2s linear .2s;'}
       }
     }
 
