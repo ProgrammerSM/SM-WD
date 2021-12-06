@@ -21,8 +21,8 @@ import { mediumUp } from 'data/media-queries'
 const propTypes = {
   buttonText: PropTypes.string,
   clickHandler: PropTypes.func,
-  customStyles: PropTypes.string,
-  icon: PropTypes.objectOf(PropTypes.string),
+  customStyles: PropTypes.objectOf(PropTypes.any),
+  icon: PropTypes.objectOf(PropTypes.any),
   isActive: PropTypes.bool,
   isDisabled: PropTypes.bool,
   tabIndexNumber: PropTypes.number,
@@ -63,6 +63,11 @@ const MenuButton = ({
     ${mediumUp} {
       width: calc(4rem + 10px);
       height: calc(4rem + 10px);
+    }
+
+    &:focus:not([disabled]),
+    &:hover:not([disabled]) {
+      box-shadow: 0 0 5px 2px ${theme.colors.primaryColor};
     }
 
     &:focus:not([disabled]) .animated-circle,

@@ -14,6 +14,7 @@ import { SettingsContext } from 'context/SettingsContext'
 // PropTypes
 const propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   isFail: PropTypes.bool,
   isSubmit: PropTypes.bool,
   isSuccess: PropTypes.bool,
@@ -23,6 +24,7 @@ const propTypes = {
 
 const Button = ({
   children,
+  className,
   isFail,
   isSubmit,
   isSuccess,
@@ -180,6 +182,7 @@ const Button = ({
   return (
     <SciFiButton
       className={`
+        ${className ? `${className} ` : ''}
         ${isFail ? 'fail' : ''}
         ${isSuccess ? 'success' : ''}
         ${isWarn ? 'warn' : ''}
