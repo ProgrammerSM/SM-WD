@@ -144,9 +144,9 @@ const SettingsMenu = () => {
           form {
             display: flex;
             flex-wrap: wrap;
+            align-content: flex-end;
             gap: ${theme.space.jumbo};
             height: 100%;
-            padding: 8% 0;
           }
 
           fieldset {
