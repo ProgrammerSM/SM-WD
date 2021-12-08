@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys -- preferred order */
 export default {
-  light: {
+  monochrome: {
     colors: {
       primaryColor: '#000000',
       fontColor: '#000000',
@@ -10,7 +10,7 @@ export default {
       accentColor3: '#000000',
     },
   },
-  dark: {
+  highContrast: {
     colors: {
       primaryColor: '#FFFFFF',
       fontColor: '#FFFFFF',

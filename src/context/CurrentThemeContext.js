@@ -21,7 +21,6 @@ const CurrentThemeProvider = ({ children }) => {
   const [themeName, setThemeName] = useLocalStorage('smwdColorThemeName', 'light')
   const [customTheme, setCustomTheme] = useLocalStorage('smwdCustomTheme', { ...themeColorGroups.light })
   const [hasCustomTheme, setHasCustomTheme] = useLocalStorage('smwdHasCustomTheme', false)
-  const previousThemeRef = useRef(themeColorGroups.light)
 
   let theme
   if (themeName === 'custom')
@@ -29,21 +28,17 @@ const CurrentThemeProvider = ({ children }) => {
       ...commonThemeValues,
       ...customTheme,
     }
-  else {
-    previousThemeRef.current = themeColorGroups[themeName]
-
+  else
     theme = {
       ...commonThemeValues,
       ...themeColorGroups[themeName],
     }
-  }
 
   return (
     <CurrentThemeContext.Provider
       value={{
         customTheme,
         hasCustomTheme,
-        previousThemeRef,
         setCustomTheme,
         setHasCustomTheme,
         setThemeName,

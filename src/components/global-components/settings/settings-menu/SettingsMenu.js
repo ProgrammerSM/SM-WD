@@ -11,9 +11,9 @@ import {
   HexColorInput,
   HexColorPicker,
 } from 'react-colorful'
-import {
+import React, {
   useContext,
-  useEffect,
+  useRef,
   useState,
 } from 'react'
 
@@ -27,6 +27,10 @@ import { SettingsContext } from 'context/SettingsContext'
 
 // Data
 import themeColorGroups from 'data/themeColorGroups'
+import {
+  largeUp,
+  mediumUp,
+} from 'data/media-queries'
 
 // PropTypes
 const propTypes = {}
@@ -46,6 +50,8 @@ const SettingsMenu = () => {
     setThemeName,
   } = useContext(CurrentThemeContext)
 
+  const previousCustomColorThemeRef = useRef(customTheme)
+  const [isCustomThemeSelected, setIsCustomThemeSelected] = useState(themeName === 'custom')
   const [settingsColorTheme, setSettingsColorTheme] = useState(theme.colors)
   const [selectedCustomColorObject, setSelectedCustomColorObject] = useState({
     color: customTheme.colors.primaryColor,
@@ -56,7 +62,6 @@ const SettingsMenu = () => {
     handleSubmit,
     register,
     setValue,
-    watch,
   } = useForm({
     defaultValues: {
       appAnimation: isAnimationActive,
@@ -66,23 +71,20 @@ const SettingsMenu = () => {
     },
   })
 
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === 'colorTheme') {
+  const themeChangeHandler = event => {
+    const selectedThemeName = event.target.value
 
-        const selectedColorName = value.colorTheme
-        if (value.colorTheme === 'custom') {
-          console.log('custom')
-          setSettingsColorTheme(customTheme.colors)
-          return
-        }
+    if (selectedThemeName === 'custom') {
+      setSettingsColorTheme(customTheme.colors)
+      setIsCustomThemeSelected(true)
+      return
+    }
 
-        setSettingsColorTheme(themeColorGroups[selectedColorName].colors)
-      }
-    })
+    if (isCustomThemeSelected)
+      setIsCustomThemeSelected(false)
 
-    return () => subscription.unsubscribe()
-  }, [watch])
+    setSettingsColorTheme(themeColorGroups[selectedThemeName].colors)
+  }
 
   const customColorSelectionHandler = (color, colorName) => {
     const uppercaseColor = color.toUpperCase()
@@ -93,6 +95,14 @@ const SettingsMenu = () => {
 
     setSettingsColorTheme(updatedCustomThemeObject)
     setValue('customColorTheme', { colors: { ...settingsColorTheme }})
+  }
+
+  const resetCustomThemeHandler = () => {
+    setSettingsColorTheme(previousCustomColorThemeRef.current.colors)
+    setSelectedCustomColorObject({
+      ...selectedCustomColorObject,
+      color: previousCustomColorThemeRef.current.colors[selectedCustomColorObject.colorName],
+    })
   }
 
   const settingsSaveHandler = data => {
@@ -133,18 +143,33 @@ const SettingsMenu = () => {
 
           form {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            gap: ${theme.space.jumbo};
             height: 100%;
+            padding: 8% 0;
           }
 
           fieldset {
-            margin-bottom: 1.38rem;
+            flex-grow: 1; 
+            width: 100%;
             padding: 0 ${theme.space.extraSmall} ${theme.space.extraSmall};
             border: 2px solid ${theme.colors.primaryColor};
             box-shadow: inset 0 0 5px 1px ${theme.colors.primaryColor};
 
+            ${mediumUp} {
+              width: calc(50% - ${theme.space.jumbo});
+            }
+
+            &.accessibility {
+              ${largeUp} {
+                width: calc(10vw - ${theme.space.jumbo});
+              }
+            }
+
             &.color-selection {
-              flex-grow: 1;
+              ${largeUp} {
+                width: calc(50vw - ${theme.space.jumbo});
+              }
             }
             
             legend {
@@ -159,15 +184,27 @@ const SettingsMenu = () => {
 
           .color-selection-wrapper {
             display: flex;
+            flex-direction: column;
             align-items: stretch;
             gap: ${theme.space.jumbo};
             height: 100%;
             padding: ${theme.space.jumbo};
+
+            ${largeUp} {
+              flex-direction: row;
+            }
           }
 
           .color-selection-preview,
           .color-selection-fields {
-            width: 50%;
+            width: 100%;
+            height: 50%;
+            min-height: 100px;
+
+            ${largeUp} {
+              min-width: 50%;
+              height: auto;
+            }
           }
 
           .color-selection-preview {
@@ -179,10 +216,22 @@ const SettingsMenu = () => {
             box-shadow: inset 0 0 5px 1px ${theme.colors.accentColor1};
           }
 
+          .color-selection-fields {
+
+            .react-colorful {
+              width: 100%;
+
+              ${largeUp} {
+                width: calc(100% - ${theme.space.jumbo});
+              }
+            }
+          }
+
           .primary-color {
             position: relative;
             width: 50%;
             height: 50%;
+            min-height: 80px;
             border: 5px solid ${settingsColorTheme.primaryColor};
           }
 
@@ -210,10 +259,16 @@ const SettingsMenu = () => {
           
           .font-color {
             margin: 0;
+            width: calc(100% - 75px);
             color: ${settingsColorTheme.fontColor};
             text-align: center;
             font-weight: bold;
             text-shadow: 0 1px 3px ${settingsColorTheme.fontColor};
+          }
+
+          .save-button-wrapper {
+            width: 100%;
+            height: 53px;
           }
 
           .save-button {
@@ -263,51 +318,59 @@ const SettingsMenu = () => {
                   {...register('customColorTheme')}
                 />
 
-                <select {...register('colorTheme')} >
+                <select {...register('colorTheme', { onChange: themeChangeHandler })} >
                   {
-                    Object.keys(themeColorGroups).map(key => (
-                      <option
-                        key={`theme-option-${key}`}
-                        value={key}
-                      >
-                        {key.toUpperCase()}
-                      </option>
-                    ))
+                    Object.keys(themeColorGroups).map(key => {
+                      const optionName = key.split(/(?=[A-Z])/).join(' ').toUpperCase()
+
+                      return (
+                        <option
+                          key={`theme-option-${key}`}
+                          value={key}
+                        >
+                          {optionName}
+                        </option>
+                      )
+                    })
                   }
 
                   <option value='custom'>CUSTOM</option>
                 </select>
 
-                {/* <button
-                  type='button'
-                  onClick={resetCustomThemeHandler}
-                >Reset</button> */}
-                {
-                  Object.keys(settingsColorTheme).map((key, index) => {
-                    const colorName = key.split('Color').join(' ')
-                    const formattedColorName = colorName.charAt(0).toUpperCase() + colorName.slice(1)
+                {isCustomThemeSelected && (
+                  <>
+                    <button
+                      type='button'
+                      onClick={resetCustomThemeHandler}
+                    >Reset</button>
+                    {
+                    Object.keys(settingsColorTheme).map((key, index) => {
+                      const colorName = key.split('Color').join(' ')
+                      const formattedColorName = colorName.charAt(0).toUpperCase() + colorName.slice(1)
 
-                    return (
-                      <button
-                        key={`custom-color-button-${index}`}
-                        type='button'
-                        onClick={() => setSelectedCustomColorObject({
-                          color: settingsColorTheme[key],
-                          colorName: key,
-                        })}
-                      >{formattedColorName}</button>
-                    )
-                  })
-                }
+                      return (
+                        <button
+                          key={`custom-color-button-${index}`}
+                          type='button'
+                          onClick={() => setSelectedCustomColorObject({
+                            color: settingsColorTheme[key],
+                            colorName: key,
+                          })}
+                        >{formattedColorName}</button>
+                      )
+                    })
+                  }
 
-                <HexColorPicker
-                  color={settingsColorTheme[selectedCustomColorObject.colorName]}
-                  onChange={color => customColorSelectionHandler(color, selectedCustomColorObject.colorName)}
-                />
-                <HexColorInput
-                  color={settingsColorTheme[selectedCustomColorObject.colorName]}
-                  onChange={color => customColorSelectionHandler(color, selectedCustomColorObject.colorName)}
-                />
+                    <HexColorPicker
+                      color={settingsColorTheme[selectedCustomColorObject.colorName]}
+                      onChange={color => customColorSelectionHandler(color, selectedCustomColorObject.colorName)}
+                    />
+                    <HexColorInput
+                      color={settingsColorTheme[selectedCustomColorObject.colorName]}
+                      onChange={color => customColorSelectionHandler(color, selectedCustomColorObject.colorName)}
+                    />
+                  </>
+                )}
               </div>
 
             </div>
